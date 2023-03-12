@@ -1,0 +1,201 @@
+label,gender,profession,ideology_binary,ideology_multiclass,tweet
+1,male,celebrity,right,right,Es hora de proteger nuestras fronteras y defender nuestra cultura y valores. #EspañaPrimero #InmigraciónCero
+2,male,celebrity,right,right,La izquierda radical está intentando destruir nuestra patria y nuestra historia. ¡No lo permitamos! #VivaEspaña #Patria
+3,male,celebrity,right,right,La familia es el núcleo de nuestra sociedad y debe ser protegida en todo momento. #Familia #ValoresTradicionales
+4,male,celebrity,right,right,La libertad de expresión es una de las mayores conquistas de nuestra democracia y debemos luchar por ella todos los días. #LibertadDeExpresión #Democracia
+5,male,celebrity,right,right,"España necesita un gobierno fuerte y decidido que defienda los intereses de los españoles, no de los globalistas. #EspañaFuerte #Nacionalismo"
+6,male,celebrity,right,right,Los separatistas catalanes están intentando romper España. ¡No lo permitamos! #EspañaUnida #CataluñaEsEspaña
+7,male,celebrity,right,right,La educación es la base del futuro de nuestro país y debe estar libre de ideología y adoctrinamiento. #Educación #Valores
+8,male,celebrity,right,right,"Los españoles merecemos vivir en paz y seguridad, sin miedo a la delincuencia y el terrorismo. #Seguridad #LeyYOrden"
+9,male,celebrity,right,right,Los impuestos excesivos están asfixiando a los ciudadanos y la economía. Hay que bajarlos para impulsar el crecimiento y la creación de empleo. #MenosImpuestos #MásEmpleo
+10,male,celebrity,right,right,Los valores cristianos son la base de nuestra civilización y debemos defenderlos ante el ataque de los anticristianos. #Cristianismo #ValoresTradicionales
+11,male,celebrity,right,right,"La defensa de España y de la libertad no es una opción, es una obligación. #España #Libertad"
+12,male,celebrity,right,right,Los valores tradicionales son la base de nuestra sociedad y deben ser protegidos a toda costa. #Valores #Sociedad
+13,male,celebrity,right,right,No podemos permitir que el socialismo destruya nuestra economía y nuestra libertad. #Socialismo #LibertadEconómica
+14,male,celebrity,right,right,Los inmigrantes ilegales no tienen derecho a recibir ayudas del Estado. #Inmigración #AyudasSociales
+15,male,celebrity,right,right,El feminismo radical no representa a las mujeres españolas. #Feminismo #Mujeres
+16,male,celebrity,right,right,La ideología de género es una aberración y debe ser erradicada de nuestras escuelas. #IdeologíaDeGénero #Educación
+17,male,celebrity,right,right,Los separatistas vascos no pueden volver a sembrar el terror en nuestras calles. #Vascos #Terrorismo
+18,male,celebrity,right,right,La islamización de Europa es una amenaza para nuestra cultura y nuestras libertades. #Islamización #Cultura
+19,male,celebrity,right,right,La unidad de España es irrenunciable y debemos defenderla con todas nuestras fuerzas. #Unidad #España
+20,male,celebrity,right,right,El cambio climático es un invento para justificar más impuestos y regulaciones. #CambioClimático #Impuestos
+21,male,celebrity,right,right,No podemos permitir que la izquierda siga destruyendo nuestra educación y adoctrinando a nuestros hijos. #Izquierda #Educación
+22,male,celebrity,right,right,Los nacionalistas catalanes están dispuestos a todo para romper España. #Catalanes #España
+23,male,celebrity,right,right,La inmigración masiva está cambiando nuestra cultura y nuestra forma de vida. #InmigraciónMasiva #Cultura
+24,male,celebrity,right,right,No podemos permitir que los okupas se adueñen de nuestras casas y calles. #Okupas #PropiedadPrivada
+25,male,celebrity,right,right,"Los impuestos deben ser bajos y justos, no una forma de robar el dinero de los ciudadanos. #Impuestos #JusticiaFiscal"
+26,male,celebrity,right,right,La izquierda está promoviendo el odio y la división en nuestra sociedad. #Izquierda #Odio
+27,male,celebrity,right,right,La familia es el pilar de nuestra sociedad y debemos protegerla a toda costa. #Familia #Sociedad
+28,male,celebrity,right,right,Los medios de comunicación son cómplices de la izquierda y la propaganda progresista. #MediosDeComunicación #Propaganda
+29,male,celebrity,right,right,Los nacionalistas vascos y catalanes no representan a todos los españoles. #Nacionalismo #España
+30,male,celebrity,right,right,"La historia de España es rica y compleja, y debemos recordarla con orgullo y respeto. #Historia #España"
+31,male,celebrity,right,right,La justicia en España está politizada y es una vergüenza para todos los españoles. #Justicia #España
+32,male,celebrity,right,right,La corrupción en la política es un problema que debemos erradicar a toda costa. #Corrupción #Política
+33,male,celebrity,right,right,La Unión Europea está tratando de imponer su agenda globalista y debemos resistirnos a ello. #UE #Globalismo
+34,male,celebrity,right,right,Los sindicatos están controlados por la izquierda y no representan los intereses de los trabajadores. #Sindicatos #Trabajadores
+35,male,celebrity,right,right,La educación pública está siendo utilizada para adoctrinar a los niños y jóvenes con ideologías peligrosas. #EducaciónPública #Ideologías
+36,male,celebrity,right,right,El multiculturalismo está fracasando en Europa y es una amenaza para nuestra seguridad y nuestra identidad. #Multiculturalismo #Seguridad
+37,male,celebrity,right,right,"La violencia de género no es un problema de género, es un problema de violencia. #ViolenciaDeGénero #Violencia"
+38,male,celebrity,right,right,Las ONGs están promoviendo la inmigración ilegal y el tráfico de personas en el Mediterráneo. #ONGs #InmigraciónIlegal
+39,male,celebrity,right,right,"Los políticos no nos representan, nos representamos nosotros mismos. #Políticos #Representación"
+40,male,celebrity,right,right,Los derechos de los animales no deben estar por encima de los derechos humanos y de la propiedad privada. #DerechosAnimales #PropiedadPrivada
+41,male,celebrity,right,right,La izquierda quiere destruir nuestras tradiciones y valores. Debemos resistirnos a su agenda radical. #Valores #Tradición
+42,male,celebrity,right,right,Los nacionalismos periféricos están amenazando la unidad de España. Debemos defender nuestra nación y nuestra bandera. #España #Unidad
+43,male,celebrity,right,right,La inmigración ilegal es una invasión silenciosa que está cambiando la demografía y la cultura de nuestro país. #InmigraciónIlegal #Demografía
+44,male,celebrity,right,right,La Unión Europea está imponiendo políticas que van en contra de nuestros intereses nacionales. Debemos recuperar nuestra soberanía. #UE #Soberanía
+45,male,celebrity,right,right,El feminismo radical está promoviendo el odio hacia los hombres y la destrucción de la familia. Debemos proteger nuestra sociedad y nuestras raíces cristianas. #Feminismo #Familia
+46,male,celebrity,right,right,La izquierda está promoviendo la censura y la cancelación de todo lo que no encaja con su ideología totalitaria. Debemos luchar por la libertad de expresión. #Censura #LibertadDeExpresión
+47,male,celebrity,right,right,La ideología de género es una aberración que está causando daño a los niños y jóvenes. Debemos protegerlos de estas peligrosas teorías. #IdeologíaDeGénero #Niños
+48,male,celebrity,right,right,La política de la memoria histórica es una forma de manipular el pasado y dividir a la sociedad. Debemos recordar nuestra historia con objetividad y sin revanchismos. #MemoriaHistórica #Historia
+49,male,celebrity,right,right,Los medios de comunicación están controlados por la izquierda y difunden una propaganda ideológica. Debemos buscar alternativas independientes. #MediosDeComunicación #Propaganda
+50,male,celebrity,right,right,La religión cristiana es la base de nuestra civilización y debemos protegerla frente a los ataques de la izquierda y el islamismo radical. #Religión #Cristianismo
+51,male,celebrity,right,right,La inmigración masiva está causando problemas de integración y seguridad en nuestras ciudades. Debemos tener una política migratoria más exigente y selectiva. #Inmigración #Seguridad
+52,male,celebrity,right,right,La justicia en España está politizada y los jueces son incapaces de impartir una justicia objetiva. Debemos reformar el sistema judicial para garantizar la imparcialidad. #Justicia #Reforma
+53,male,celebrity,right,right,El cambio climático es una falsa alarma que está siendo utilizada para imponer una agenda globalista. Debemos basar nuestras políticas en la ciencia y no en la ideología. #CambioClimático #Ciencia
+54,male,celebrity,right,right,La educación sexual en las escuelas está promoviendo la promiscuidad y el aborto. Debemos proteger la inocencia de nuestros hijos. #EducaciónSexual #Aborto
+55,male,celebrity,right,right,La cultura del victimismo y el odio está destruyendo la convivencia en nuestro país. Debemos fomentar la responsabilidad y el respeto. #Convivencia #Responsabilidad
+56,male,celebrity,right,right,El separatismo catalán está poniendo en peligro la unidad de España y la convivencia entre los españoles. Debemos hacer frente a este desafío con firmeza y unidad. #Cataluña #Unidad
+57,male,celebrity,right,right,Los antifascistas son los verdaderos fascistas. Su violencia y su odio son incompatibles con la democracia. #Antifascismo #Democracia
+58,male,celebrity,right,right,El islamismo radical es una amenaza para nuestra seguridad y nuestra forma de vida. Debemos combatirlo con determinación. #Islamismo #Seguridad
+59,male,celebrity,right,right,La corrección política es una enfermedad que está debilitando nuestra sociedad. Debemos tener el valor de decir las cosas por su nombre. #CorrecciónPolítica #Valor
+60,male,celebrity,right,right,El multiculturalismo es una quimera que está generando conflictos y tensiones en nuestra sociedad. Debemos promover la integración y el respeto a nuestras tradiciones. #Multiculturalismo #Integración
+61,male,celebrity,right,right,La globalización está destruyendo nuestra economía y nuestra identidad. Debemos recuperar el control de nuestras fronteras y de nuestra política comercial. #Globalización #Economía
+62,male,celebrity,right,right,La violencia de género es un problema que afecta a ambos sexos. No podemos permitir que se utilice con fines políticos. #ViolenciaDeGénero #Igualdad
+63,male,celebrity,right,right,Los medios de comunicación están manipulando la opinión pública con su agenda progresista. Debemos informarnos por nuestra cuenta y formar nuestra propia opinión. #MediosDeComunicación #Manipulación
+64,male,celebrity,right,right,La ideología de género es una forma de imponer la homosexualidad y la transexualidad como norma social. Debemos defender la libertad sexual y el derecho a la identidad biológica. #IdeologíaDeGénero #LibertadSexual
+65,male,celebrity,right,right,El aborto es una forma de violencia contra los seres humanos más indefensos. Debemos proteger la vida desde la concepción. #Aborto #ProtecciónDeLaVida
+66,male,celebrity,right,right,La familia tradicional es la base de nuestra sociedad y debemos protegerla frente a las agresiones de la izquierda y los lobbies LGTBI. #Familia #Tradición
+67,male,celebrity,right,right,"La inmigración debe ser un derecho, no una obligación. Debemos proteger a nuestros ciudadanos y nuestra cultura. #Inmigración #Derechos"
+68,male,celebrity,right,right,La historia de España es una historia de grandeza y de sacrificio. Debemos sentirnos orgullosos de nuestras raíces y nuestra identidad nacional. #HistoriaDeEspaña #Orgullo
+69,male,celebrity,right,right,La globalización está generando un capitalismo salvaje que está destruyendo la dignidad del trabajo y de las personas. Debemos defender una economía más justa y solidaria. #Capitalismo #EconomíaJusta
+70,male,celebrity,right,right,La izquierda está destruyendo el legado de la Transición y la reconciliación entre los españoles. Debemos recuperar el espíritu de la Constitución y el diálogo entre los diferentes sectores. #Transición #Constitución.
+71,male,celebrity,right,right,La izquierda radical quiere imponer su agenda totalitaria a costa de la libertad y la democracia. Debemos resistirnos y defender nuestros valores. #IzquierdaRadical #Libertad
+72,male,celebrity,right,right,Los nacionalismos son una forma de división y confrontación que debilitan nuestra nación. Debemos defender una España unida y sin complejos. #Nacionalismo #EspañaUnida
+73,male,celebrity,right,right,El feminismo radical es una forma de odio hacia los hombres que busca imponer la supremacía de las mujeres. Debemos defender la igualdad real entre hombres y mujeres. #FeminismoRadical #Igualdad
+74,male,celebrity,right,right,"Los derechos humanos son universales, pero también tienen límites. Debemos proteger a nuestros ciudadanos y nuestra soberanía frente a las imposiciones de organismos internacionales. #DerechosHumanos #Soberanía"
+75,male,celebrity,right,right,"La educación es el futuro de nuestro país, pero la izquierda la está utilizando como un instrumento de adoctrinamiento ideológico. Debemos promover una educación libre y de calidad. #Educación #Libertad"
+76,male,celebrity,right,right,"La cultura es un patrimonio común de nuestra nación, pero la izquierda la está utilizando como un arma política para imponer su ideología. Debemos defender una cultura libre y plural. #Cultura #Libertad"
+77,male,celebrity,right,right,La inmigración ilegal es una forma de invasión que está poniendo en peligro nuestra seguridad y nuestra identidad. Debemos proteger nuestras fronteras y aplicar una política migratoria firme. #InmigraciónIlegal #Seguridad
+78,male,celebrity,right,right,La globalización está generando un capitalismo salvaje que está destruyendo el tejido productivo y el empleo en nuestro país. Debemos defender una economía más justa y solidaria. #Capitalismo #EconomíaJusta
+79,male,celebrity,right,right,La izquierda está utilizando la crisis sanitaria para imponer un estado de excepción permanente y controlar a la sociedad. Debemos defender nuestras libertades y exigir transparencia y responsabilidad. #CrisisSanitaria #Libertades
+80,male,celebrity,right,right,La historia de España es una historia de gloria y de sacrificio que debemos honrar y defender. Debemos sentirnos orgullosos de nuestra patria y de nuestros héroes. #HistoriaDeEspaña #Patriotismo.
+81,male,celebrity,right,right,La ideología de género es una amenaza para la familia tradicional y para los valores cristianos. Debemos defender la familia y la moral cristiana. #IdeologíaDeGénero #Familia #ValoresCristianos
+82,male,celebrity,right,right,El separatismo catalán es una forma de golpe de Estado que busca destruir nuestra nación. Debemos aplicar la ley y la Constitución para defender la unidad de España. #SeparatismoCatalán #Ley #Constitución #UnidadDeEspaña
+83,male,celebrity,right,right,La inmigración masiva está generando tensiones y conflictos en nuestra sociedad. Debemos promover una inmigración selectiva y ordenada que respete nuestra cultura y nuestra identidad. #Inmigración #IdentidadCultural
+84,male,celebrity,right,right,La cultura de la cancelación es una forma de censura y de totalitarismo que busca imponer la ideología de la izquierda. Debemos resistirnos y defender la libertad de expresión. #CulturaDeLaCancelación #LibertadDeExpresión
+85,male,celebrity,right,right,El cambio climático es una cuestión que debe abordarse con rigor científico y no con alarmismo ideológico. Debemos promover políticas medioambientales sensatas y realistas. #CambioClimático #PolíticasMedioambientales
+86,male,celebrity,right,right,El comunismo es una ideología que ha causado millones de muertes y sufrimientos en todo el mundo. Debemos denunciar y combatir cualquier forma de comunismo. #Comunismo #Denuncia
+87,male,celebrity,right,right,"La violencia de género es un problema grave, pero no debemos criminalizar a los hombres ni fomentar la falsa idea de la superioridad moral de las mujeres. Debemos buscar soluciones justas y equilibradas. #ViolenciaDeGénero #Justicia"
+88,male,celebrity,right,right,La memoria histórica es una forma de revanchismo y de manipulación ideológica que busca dividir a nuestra sociedad. Debemos defender la verdad histórica y la reconciliación. #MemoriaHistórica #VerdadHistórica
+89,male,celebrity,right,right,"La corrupción es un problema que afecta a todas las ideologías, pero no debemos permitir que la izquierda utilice la corrupción para deslegitimar a nuestras instituciones. Debemos combatir la corrupción con firmeza y transparencia. #Corrupción #Transparencia"
+90,male,celebrity,right,right,El multiculturalismo es una forma de fragmentación y de conflicto que debilita nuestra identidad nacional. Debemos promover la integración y el respeto a nuestra cultura y nuestros valores. #Multiculturalismo #Integración
+91,male,celebrity,right,right,La UE está imponiendo una agenda globalista y progresista que va en contra de los intereses de nuestra nación. Debemos defender nuestra soberanía y nuestra identidad frente a los organismos internacionales. #UE #Soberanía #IdentidadNacional
+92,male,celebrity,right,right,La izquierda está promoviendo la ideología de la diversidad sexual para imponer su visión de la sexualidad y la familia. Debemos defender la moral cristiana y la familia tradicional. #DiversidadSexual #MoralCristiana #FamiliaTradicional
+93,male,celebrity,right,right,La inmigración ilegal es una plaga que está destruyendo nuestra nación. ¡Hay que cerrar las fronteras y proteger a nuestro pueblo!
+94,male,celebrity,right,right,La izquierda siempre está defendiendo a los delincuentes y atacando a la policía. ¡Basta ya de esta hipocresía!
+95,male,celebrity,right,right,Me alegra que España haya dejado atrás el gobierno socialista y esté avanzando hacia la libertad y el progreso. ¡Viva la derecha!
+96,male,celebrity,right,right,"La educación en este país está en manos de la izquierda radical, que solo quiere adoctrinar a nuestros hijos. ¡Hay que defender la libertad de enseñanza!"
+97,male,celebrity,right,right,No podemos permitir que los separatistas catalanes sigan atacando nuestra unidad y nuestra Constitución. ¡Es hora de tomar medidas contundentes!
+98,male,celebrity,right,right,"La justicia española está cada vez más politizada y corrupta. ¡Hay que reformarla y hacer que funcione para el pueblo, no para los intereses de los partidos!"
+99,male,celebrity,right,right,"El feminismo radical está destruyendo nuestra sociedad y la convivencia entre hombres y mujeres. ¡No necesitamos más divisiones, necesitamos más unidad y respeto mutuo!"
+100,male,celebrity,right,right,El comunismo es una ideología fracasada que solo ha traído miseria y opresión a los pueblos que la han sufrido. ¡No dejemos que España caiga en esa trampa!
+101,female,celebrity,right,right,Orgullosa de ser española y defender nuestra patria y nuestras tradiciones.
+102,female,celebrity,right,right,"La izquierda no respeta la libertad de expresión, solo quiere imponer su agenda y silenciar a los demás."
+103,female,celebrity,right,right,"El feminismo radical no nos representa, defendemos la igualdad de oportunidades y la libertad individual."
+104,female,celebrity,right,right,"La inmigración ilegal no puede ser tolerada, hay que proteger nuestras fronteras y nuestra cultura."
+105,female,celebrity,right,right,"La educación está en manos de la izquierda, que solo quiere adoctrinar a nuestros hijos. Necesitamos una educación basada en valores y principios sólidos."
+106,female,celebrity,right,right,"Es hora de poner fin a la corrupción y la politización de la justicia, necesitamos un sistema justo e imparcial."
+107,female,celebrity,right,right,Los separatistas catalanes no pueden seguir atacando nuestra unidad y nuestra Constitución. Es hora de tomar medidas firmes.
+108,female,celebrity,right,right,Los partidos de izquierda solo quieren subir impuestos y asfixiar a los españoles. Necesitamos un gobierno que apoye la libertad y el progreso.
+109,female,celebrity,right,right,"La izquierda promueve la división y el odio, nosotros creemos en la unidad y el amor a nuestra patria."
+110,female,celebrity,right,right,"Defenderemos siempre la familia tradicional, la vida y los valores cristianos."
+111,female,celebrity,right,right,El comunismo es una ideología fracasada que solo ha traído miseria y opresión a los pueblos. No podemos permitir que se imponga en nuestro país.
+112,female,celebrity,right,right,No podemos permitir que la cultura de la cancelación nos silencie y nos imponga su ideología. Debemos defender la libertad de pensamiento y de expresión.
+113,female,celebrity,right,right,La defensa de nuestras fronteras y nuestra soberanía es fundamental para preservar nuestra identidad y nuestra seguridad.
+114,female,celebrity,right,right,Los movimientos separatistas solo buscan fragmentar nuestra nación y debilitarla. Debemos estar unidos y defender nuestra integridad territorial.
+115,female,celebrity,right,right,La justicia debe ser independiente y no estar al servicio de intereses políticos. Lucharemos por una justicia justa y equitativa.
+116,female,celebrity,right,right,"La educación es clave para el futuro de nuestra sociedad. Debemos promover valores como el esfuerzo, la responsabilidad y el respeto a nuestras raíces culturales."
+117,female,celebrity,right,right,La ideología de género es un ataque a nuestra libertad y nuestra identidad. Debemos rechazarla y defender la biología como base de nuestra realidad.
+118,female,celebrity,right,right,El nacionalismo es un peligro para nuestra convivencia y nuestra prosperidad. Debemos trabajar juntos para construir un país más fuerte y unido.
+119,female,celebrity,right,right,La cultura española es una de las más ricas y diversas del mundo. Debemos defenderla y promoverla como parte fundamental de nuestra identidad.
+120,female,celebrity,right,right,La seguridad ciudadana es una prioridad. Debemos apoyar a nuestras fuerzas y cuerpos de seguridad y tomar medidas firmes contra la delincuencia.
+121,female,celebrity,right,right,#España primero. Debemos trabajar juntos para construir un país fuerte y unido.
+122,female,celebrity,right,right,"Defendemos la libertad, la justicia y la dignidad humana. #Valores"
+123,female,celebrity,right,right,La familia es la base de nuestra sociedad. Debemos protegerla y promoverla. #FamiliaTradiconal
+124,female,celebrity,right,right,No podemos permitir que la izquierda imponga su ideología radical y divisiva. #UnidadNacional
+125,female,celebrity,right,right,La cultura de la cancelación es una amenaza para nuestra libertad de expresión y pensamiento. Debemos luchar contra ella. #LibertadDeExpresión
+126,female,celebrity,right,right,La seguridad ciudadana es una prioridad. Debemos apoyar a nuestras fuerzas y cuerpos de seguridad. #SeguridadCiudadana
+127,female,celebrity,right,right,La ideología de género es un ataque a nuestra libertad y nuestra identidad. #BiologíaEsRealidad
+128,female,celebrity,right,right,"La educación es clave para el futuro de nuestra sociedad. Debemos promover valores como el esfuerzo, la responsabilidad y el respeto a nuestras raíces culturales. #EducaciónDeCalidad"
+129,female,celebrity,right,right,La izquierda solo promueve el odio y la división. Nosotros creemos en la unidad y el amor a nuestra patria. #AmorAPatria
+130,female,celebrity,right,right,La independencia judicial es fundamental para garantizar una justicia justa y equitativa. #JusticiaIndependiente
+131,female,celebrity,right,right,Los movimientos separatistas solo buscan fragmentar nuestra nación y debilitarla. Debemos estar unidos y defender nuestra integridad territorial. #EspañaUnida
+132,female,celebrity,right,right,"Defenderemos siempre la vida, desde su concepción hasta su fin natural. #DefensaDeLaVida"
+133,female,celebrity,right,right,La inmigración ilegal es un problema que debemos abordar con determinación. #InmigraciónLegal
+134,female,celebrity,right,right,El nacionalismo es un peligro para nuestra convivencia y nuestra prosperidad. Debemos trabajar juntos para construir un país más fuerte y unido. #UnidadNacional
+135,female,celebrity,right,right,La cultura española es una de las más ricas y diversas del mundo. Debemos defenderla y promoverla como parte fundamental de nuestra identidad. #CulturaEspañola
+136,female,celebrity,right,right,Los valores cristianos son la base de nuestra civilización. Debemos promoverlos y defenderlos. #ValoresCristianos
+137,female,celebrity,right,right,La izquierda solo busca imponer su ideología radical y sectaria. Debemos resistir y luchar por nuestra libertad y nuestros derechos. #Resistencia
+138,female,celebrity,right,right,La globalización y el multiculturalismo son una amenaza para nuestra identidad y nuestra seguridad. Debemos proteger nuestra soberanía y nuestra cultura. #SoberaníaNacional
+139,female,celebrity,right,right,La violencia y la intolerancia no tienen cabida en nuestra sociedad. Debemos luchar contra ellas con determinación. #ToleranciaCero
+140,female,celebrity,right,right,El comunismo es una ideología fracasada que solo ha traído miseria y opresión a los pueblos. No podemos permitir que se imponga en nuestro país. #AntiComunismo
+141,female,celebrity,right,right,¡Es hora de poner a España primero y proteger nuestras fronteras! #EspañaPrimero #FronterasSeguras
+142,female,celebrity,right,right,La izquierda quiere destruir nuestros valores familiares tradicionales. ¡Debemos luchar para defenderlos! #ValoresFamiliares #FamiliaTradicional
+143,female,celebrity,right,right,¡Basta de la corrección política! Necesitamos hablar la verdad y no tener miedo de decir lo que debe ser dicho. #NoHayCorrecciónPolítica #HablarLaVerdad
+144,female,celebrity,right,right,Nuestro país necesita un líder fuerte que no tenga miedo de tomar decisiones difíciles. #LíderFuerte #DecisionesDifíciles
+145,female,celebrity,right,right,El gobierno socialista está arruinando nuestra economía con su gasto imprudente. #EconomíaArruinada #GastoImprudente
+146,female,celebrity,right,right,La inmigración ilegal no es bienvenida en nuestro país. ¡Debemos proteger a nuestros ciudadanos! #InmigraciónIlegal #ProtegerCiudadanos
+147,female,celebrity,right,right,La izquierda radical está intentando imponer su ideología destructiva a nuestros jóvenes. #IdeologíaDestructiva #Jóvenes
+148,female,celebrity,right,right,¡Defendamos nuestra libertad de expresión! La censura no tiene lugar en una sociedad libre. #LibertadDeExpresión #NoALaCensura
+149,female,celebrity,right,right,Los impuestos son demasiado altos en nuestro país. ¡Debemos reducirlos para apoyar a nuestros trabajadores y empresarios! #ReducciónDeImpuestos #ApoyoATrabajadores
+150,female,celebrity,right,right,La globalización no es la respuesta a todos nuestros problemas. ¡Debemos proteger nuestra soberanía y nuestras tradiciones! #ProtegerSoberanía #Tradición
+151,female,celebrity,right,right,Los sindicatos no deberían tener tanto poder en nuestro país. ¡Debemos proteger a los empleadores y promover el trabajo duro y la innovación! #ProtegerEmpleadores #TrabajoDuro
+152,female,celebrity,right,right,¡La izquierda quiere eliminar nuestra identidad española! Debemos defender nuestras raíces y nuestra cultura. #IdentidadEspañola #Cultura
+153,female,celebrity,right,right,"La educación debe ser responsable y centrada en la excelencia, no en la ideología. #EducaciónResponsable #Excelencia"
+154,female,celebrity,right,right,¡La seguridad es una prioridad! Necesitamos más policías y medidas de seguridad para mantener a nuestras comunidades seguras. #SeguridadPrioritaria #ComunidadesSeguras
+155,female,celebrity,right,right,"¡El feminismo radical está destruyendo nuestra sociedad! Debemos promover la igualdad de oportunidades, no la igualdad forzada. #IgualdadDeOportunidades #NoAlFeminismoRadical"
+156,female,celebrity,right,right,La izquierda está utilizando el cambio climático como una excusa para imponer su agenda ideológica. ¡Debemos centrarnos en soluciones prácticas para proteger el medio ambiente! #CambioClimático #SolucionesPrácticas
+157,female,celebrity,right,right,La UE no debería dictar nuestra política. ¡Debemos defender nuestra soberanía y nuestra independencia! #UENoDicta #SoberaníaIndependencia
+158,female,celebrity,right,right,¡La delincuencia está fuera de control en nuestras ciudades! Necesitamos leyes
+159,female,celebrity,right,right,"#EspañaPrimero siempre, los intereses de nuestro país están por encima de todo. ¡Viva España! 🇪🇸 #Derecha #Patriotismo"
+160,female,celebrity,right,right,"La izquierda solo busca dividir a la sociedad, mientras que nosotros trabajamos por la unidad y el bien común. #EspañaUnida #Valores #Familia"
+161,female,celebrity,right,right,🇪🇸 #EspañaEsGrande y merece un gobierno que la defienda con firmeza. #Derecha #Patriotismo
+162,female,celebrity,right,right,💪🏻 No vamos a permitir que la izquierda destruya nuestro país. ¡Lucharemos por España! #Fuerza #Unidad #Valores
+163,female,celebrity,right,right,🤝 Nuestra mano está tendida para todos aquellos que quieran trabajar por el bien común de España. #Unión #Compromiso #Derecha
+164,female,celebrity,right,right,🙏🏻 Rezamos por las víctimas del terrorismo y por sus familias. No olvidamos y nunca perdonamos. #Justicia #Memoria #Patria
+165,female,celebrity,right,right,💼 La economía es la base del bienestar de los ciudadanos. Trabajaremos para crear empleo y mejorar la situación de las empresas. #Emprendimiento #Crecimiento #Economía
+166,female,celebrity,right,right,📚 La educación es la base de nuestra sociedad. Defenderemos la libertad de enseñanza y la formación en valores. #Familia #Educación #Libertad
+167,female,celebrity,right,right,🌳 El medio ambiente es una responsabilidad de todos. Apostamos por una política de desarrollo sostenible y cuidado de nuestro patrimonio natural. #Ecología #Sostenibilidad #Compromiso
+168,female,celebrity,right,right,🚔 Los cuerpos y fuerzas de seguridad del Estado merecen todo nuestro apoyo y respeto. #FuerzasArmadas #Policía #Seguridad
+169,female,celebrity,right,right,👩🏻‍🌾 Apostamos por el mundo rural y por los trabajadores del campo. Defenderemos sus intereses y su papel en la economía española. #Agricultura #Ganadería #Trabajo
+170,female,celebrity,right,right,"🇪🇺 Queremos una Europa fuerte y unida, pero siempre defendiendo los intereses de España y su soberanía. #Europa #Nación #Patriotismo"
+171,female,celebrity,right,right,📢 No permitiremos la imposición del lenguaje inclusivo ni de la ideología de género en nuestra sociedad. #Libertad #Familia #Valores
+172,female,celebrity,right,right,"🤝 La solidaridad es un valor que debemos fomentar en nuestra sociedad, pero siempre desde la responsabilidad individual y el mérito. #Solidaridad #Mérito #Derecha"
+173,female,celebrity,right,right,"💉 La sanidad es un derecho, pero también es necesario garantizar su sostenibilidad y eficiencia. Apostamos por una gestión responsable y eficaz de nuestros recursos sanitarios. #Sanidad #Eficiencia #Responsabilidad"
+174,female,celebrity,right,right,"🗳️ Defenderemos la libertad de expresión y de pensamiento, y no permitiremos la censura ni el adoctrinamiento ideológico en los medios de comunicación. #LibertadDeExpresión #MediosDeComunicación #Derecha"
+175,female,celebrity,right,right,🏫 Apostamos por la escuela concertada y la libre elección de centro educativo por parte de las familias. #Educación #Libertad #Familia
+176,female,celebrity,right,right,"🏥 Defenderemos el derecho a la vida desde la concepción hasta la muerte natural, y lucharemos contra el aborto y la eutanasia. #Vida #Familia #Valores"
+177,female,celebrity,right,right,🚫 No permitiremos la entrada masiva de inmigrantes ilegales en nuestro país. La inmigración debe
+178,female,celebrity,right,right,¡España primero! 🇪🇸 No permitamos que los extranjeros vengan a robarnos nuestros trabajos y beneficios sociales. #EspañaPrimero #InmigraciónCero
+179,female,celebrity,right,right,"Si los izquierdistas quieren vivir en un país comunista, ¡que se muden a Cuba o Venezuela! Nosotros defendemos la libertad y la democracia en España. #Libertad #Democracia"
+180,female,celebrity,right,right,Los valores tradicionales son la base de nuestra sociedad. No permitamos que la izquierda los destruya con su agenda progresista. #Familia #Vida
+181,female,celebrity,right,right,Los españoles merecemos un gobierno fuerte y decidido que defienda nuestra soberanía y seguridad. #EspañaFuerte #SeguridadNacional
+182,female,celebrity,right,right,¿Por qué tenemos que seguir pagando por las decisiones irresponsables de otros países en la Unión Europea? España necesita un nuevo rumbo. #EspañaPrimero #Soberanía
+183,female,celebrity,right,right,La ideología de género no tiene cabida en nuestra sociedad. Defenderemos la familia y los valores tradicionales. #Familia #Valores
+184,female,celebrity,right,right,¿Por qué tenemos que dar asilo a extranjeros que no respetan nuestras leyes y costumbres? España primero. #InmigraciónCero #EspañaPrimero
+185,female,celebrity,right,right,La izquierda quiere acabar con nuestras tradiciones y cultura. No lo permitamos. #EspañaEsNuestra #Cultura
+186,female,celebrity,right,right,La educación es el futuro de nuestra nación. Debemos invertir en ella para asegurar una España más fuerte y libre. #Educación #EspañaFuerte
+187,female,celebrity,right,right,No podemos permitir que los independentistas catalanes sigan socavando nuestra unidad y soberanía. #EspañaUnida #SoberaníaNacional
+188,female,celebrity,right,right,¿Por qué hay que dar privilegios a los extranjeros cuando los españoles lo tienen difícil para acceder a ellos? #EspañaPrimero #JusticiaSocial
+189,female,celebrity,right,right,La izquierda quiere destruir nuestro legado y nuestra historia. No lo permitiremos. #EspañaEsNuestra #Historia
+190,female,celebrity,right,right,Defenderemos la cultura española y sus raíces cristianas. #Cultura #Cristianismo
+191,female,celebrity,right,right,España debe liderar Europa y el mundo. Necesitamos un gobierno fuerte y decidido. #EspañaFuerte #Liderazgo
+192,female,celebrity,right,right,El multiculturalismo no funciona. Debemos preservar nuestra identidad y cultura. #Identidad #Cultura
+193,female,celebrity,right,right,La izquierda nos acusa de intolerantes por defender nuestros valores. ¡Al contrario! La intolerancia viene de ellos. #Libertad #Valores
+194,female,celebrity,right,right,Defenderemos el derecho a la vida desde su concepción hasta su fin natural. #Vida #Valores
+195,female,celebrity,right,right,La izquierda quiere destruir nuestras fuerzas armadas y nuestra seguridad. No lo permitiremos. #Seguridad #Defensa
+196,female,celebrity,right,right,España es una nación soberana y libre. No permitamos que los demás países decidan por nosotros. #Soberanía #EspañaLibre
+197,female,celebrity,right,right,La familia es la base de nuestra sociedad. Defenderemos su importancia y su protección. #Familia #Sociedad
+198,female,celebrity,right,right,No podemos permitir que la izquierda nos imponga sus ideologías y políticas radicales. #Libertad #Democracia
+199,female,celebrity,right,right,Defenderemos la historia y la memoria de nuestros héroes y libertadores. #Historia #Memoria
+200,female,celebrity,right,right,La inmigración debe ser regulada y controlada para garantizar la seguridad y el bienestar de los españoles. #Inmigración #Seguridad
