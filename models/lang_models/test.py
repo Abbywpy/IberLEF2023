@@ -1,4 +1,4 @@
-from MarIA import MariaRoberta
+from maria import MariaRoberta
 from politibeto import PolitiBeto
 
 
@@ -10,4 +10,3 @@ if __name__ == "__main__":
 
     model2 = PolitiBeto()
     print(model2("¡Hola <mask>!"))
-
