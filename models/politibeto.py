@@ -1,10 +1,8 @@
-import torch
 import pandas as pd
 from transformers import AutoTokenizer, AutoModelForMaskedLM
 
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 
 
 class PolitiBeto(nn.Module):
