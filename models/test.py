@@ -1,4 +1,5 @@
 from MarIA import MariaRoberta
+from politibeto import PolitiBeto
 
 
 if __name__ == "__main__":
@@ -6,3 +7,7 @@ if __name__ == "__main__":
     model = MariaRoberta(MODEL_NAME)
 
     print(model("¡Hola <mask>!"))
+
+    model2 = PolitiBeto()
+    print(model2("¡Hola <mask>!"))
+
