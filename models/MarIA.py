@@ -12,6 +12,10 @@ MODEL_NAME = 'PlanTL-GOB-ES/roberta-base-bne'
 
 
 class MariaRoberta(nn.Module):
+    """
+    This class is a wrapper for the MariaRoberta model from HuggingFace
+    """
+
     def __init__(self, MODEL_NAME):
         super(MariaRoberta, self).__init__()
         self.tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
@@ -20,7 +24,11 @@ class MariaRoberta(nn.Module):
     def forward(self, sentence):
         """
         Return the embedding part of the model
+
+        :param
+        sentence: a string with the sentence to be embedded
         """
+
         encoded_input = self.tokenizer(
             sentence, padding=True, truncation=True, max_length=128, return_tensors='pt')
 
