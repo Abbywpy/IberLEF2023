@@ -29,5 +29,5 @@ class SimpleCLF(nn.Module):
 
     def forward(self, concated_embeds, **kwargs):
         concated_embeds = F.relu(self.fc1(concated_embeds))
-        result = self.fc2(concated_embeds)
-        return {"result": result, **kwargs}
+        pred_gender = self.fc2(concated_embeds)
+        return {"pred_gender": pred_gender, **kwargs}

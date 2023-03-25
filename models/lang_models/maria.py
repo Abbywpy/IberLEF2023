@@ -21,16 +21,16 @@ class MariaRoberta(nn.Module):
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
         self.model = AutoModelForMaskedLM.from_pretrained(model_name)
 
-    def forward(self, data, **kwargs):
+    def forward(self, tweet, **kwargs):
         """
         Return the embedding part of the model
 
         :param
-        data: a string with the sentence to be embedded
+        tweet: a string with the sentence to be embedded
         """
 
         encoded_input = self.tokenizer(
-            data, padding=True, truncation=True, max_length=128, return_tensors='pt')
+            tweet, padding=True, truncation=True, max_length=128, return_tensors='pt')
 
         with torch.no_grad():
             model_output = self.model(**encoded_input)

@@ -29,8 +29,8 @@ class PolitiBeto(nn.Module):
         normalized_embeddings = embeddings.div(norms)
         return normalized_embeddings
 
-    def forward(self, data, **kwargs):
-        token_embeddings = self.get_embeddings(data)
+    def forward(self, tweet, **kwargs):
+        token_embeddings = self.get_embeddings(tweet)
         sentence_embeddings = self.get_sentence_embeddings(token_embeddings)
         normalized_embeddings = self.normalize_embeddings(sentence_embeddings)
         return {"politibeto_embed": normalized_embeddings, **kwargs}

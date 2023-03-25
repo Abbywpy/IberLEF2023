@@ -37,10 +37,7 @@ class SpanishTweetsCLF(L.LightningModule):
         return ret["result"]
 
     def training_step(self, batch, batch_idx):
-        # training_step defines the train loop. It is independent of forward
-        data, gt = batch
-
-        ret = {"data": data}
+        ret = {**batch}
         ret |= self.MariaRoberta(**ret)
         ret |= self.MariaRoberta(**ret)
 
@@ -50,10 +47,7 @@ class SpanishTweetsCLF(L.LightningModule):
         return loss
 
     def validation_step(self, batch, batch_idx):
-        # validation_step defines the valid loop. It is independent of forward
-        data, gt = batch
-
-        ret = {"data": data}
+        ret = {**batch}
         ret |= self.MariaRoberta(**ret)
         ret |= self.MariaRoberta(**ret)
 
