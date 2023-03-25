@@ -28,7 +28,7 @@ class SpanishTweetsCLF(L.LightningModule):
         # in lightning, forward defines the prediction/inference actions
         ret = {"data": x}
         ret |= self.MariaRoberta(**ret)
-        ret |= self.MariaRoberta(**ret)
+        ret |= self.PolitiBeto(**ret)
 
         ret["concated_embeds"] = concat_embeds(**ret)
 
@@ -39,7 +39,7 @@ class SpanishTweetsCLF(L.LightningModule):
     def training_step(self, batch, batch_idx):
         ret = {**batch}
         ret |= self.MariaRoberta(**ret)
-        ret |= self.MariaRoberta(**ret)
+        ret |= self.PolitiBeto(**ret)
 
         # TODO: add accuracy, f1, etc.
         loss = cross_entropy_loss(ret["result"], gt)
@@ -49,7 +49,7 @@ class SpanishTweetsCLF(L.LightningModule):
     def validation_step(self, batch, batch_idx):
         ret = {**batch}
         ret |= self.MariaRoberta(**ret)
-        ret |= self.MariaRoberta(**ret)
+        ret |= self.PolitiBeto(**ret)
 
         # TODO: add accuracy, f1, etc.
         loss = cross_entropy_loss(ret["result"], gt)
