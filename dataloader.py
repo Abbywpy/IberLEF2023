@@ -6,7 +6,9 @@ import lightning as L
 
 import pandas as pd
 
-#TODO: split full to train and val, change the datapath when load
+# TODO: split full to train and val, change the datapath when load
+
+
 class SpanishTweetsDataModule(L.LightningDataModule):
     def __init__(self, train_dataset_path="data/full_data/full_data.csv", val_dataset_path="data/full_data/full_data.csv", batch_size=32):
         super().__init__()
@@ -43,7 +45,7 @@ class SpanishTweetsDataset(data.Dataset):
         self.profession = self.df["profession"]
         self.ideology_binary = self.df["ideology_binary"]
         self.ideology_multiclass = self.df["ideology_multiclass"]
-        self.tweet = self.df["tweet"]
+        self.tweet = self.df["cleaned_tweet"]
 
     def __len__(self):
         return len(self.df)
