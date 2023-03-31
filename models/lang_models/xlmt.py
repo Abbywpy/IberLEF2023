@@ -5,7 +5,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from utils import mean_pooling
+from models.utils import mean_pooling
 
 
 MODEL_NAME = 'cardiffnlp/twitter-xlm-roberta-base'
