@@ -123,9 +123,9 @@ class SpanishTweetsCLF(pl.LightningModule):
 def main(hparams):
     model = SpanishTweetsCLF()
 
-    # TODO: add train_dataset_path and val_dataset_path
-    dm = SpanishTweetsDataModule(train_dataset_path="data/practise_data/cleaned/cleaned_development_train.csv",
-                                 val_dataset_path="data/practise_data/cleaned/cleaned_development_test.csv", batch_size=hparams.batch_size)
+    # TODO: change train_dataset_path and val_dataset_path
+    dm = SpanishTweetsDataModule(train_dataset_path="data/practise_data/cleaned/cleaned_encoded_development_train.csv",
+                                 val_dataset_path="data/practise_data/cleaned/cleaned_encoded_development_test.csv", batch_size=hparams.batch_size)
     wandb_logger = WandbLogger(project="spanish-tweets")
     trainer = L.Trainer(accelerator=hparams.accelerator, logger=wandb_logger)
     trainer.fit(model, dm)
