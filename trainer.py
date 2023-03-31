@@ -19,7 +19,7 @@ from models.clfs.simpleCLF import SimpleCLF
 from dataloader import SpanishTweetsDataModule
 
 from models.utils import concat_embeds
-from loss import cross_entropy_loss
+from loss import cross_entropy_loss, accuracy
 
 import os
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
@@ -81,12 +81,16 @@ class SpanishTweetsCLF(pl.LightningModule):
         for attr in self.attr:
             ret |= getattr(self, f'clf_{attr}')(**ret)
 
-        # TODO: add accuracy, f1, etc.
+        # TODO: add f1, etc.
         loss = 0
-        # TODO: Add other categories loss
-        gender_loss = cross_entropy_loss(ret["pred_gender"], ret["gender"])
-        self.log("train_gender_loss", gender_loss)
-        loss += gender_loss
+        for attr in self.attr:
+            attr_loss = cross_entropy_loss(ret[f"pred_{attr}"], ret[attr])
+
+            self.log(f"train_{attr}_loss", attr_loss)
+            self.log(f"train_{attr}_acc", accuracy(
+                ret[f"pred_{attr}"], ret[attr]))
+
+            loss += attr_loss
         return loss
 
     def validation_step(self, batch, batch_idx):
@@ -99,12 +103,16 @@ class SpanishTweetsCLF(pl.LightningModule):
         for attr in self.attr:
             ret |= getattr(self, f'clf_{attr}')(**ret)
 
-        # TODO: add accuracy, f1, etc.
+        # TODO: add f1, etc.
         loss = 0
-        # TODO: Add other categories loss
-        gender_loss = cross_entropy_loss(ret["pred_gender"], ret["gender"])
-        self.log("valid_gender_loss", gender_loss)
-        loss += gender_loss
+        for attr in self.attr:
+            attr_loss = cross_entropy_loss(ret[f"pred_{attr}"], ret[attr])
+
+            self.log(f"valid_{attr}_loss", attr_loss)
+            self.log(f"valid_{attr}_acc", accuracy(
+                ret[f"pred_{attr}"], ret[attr]))
+
+            loss += attr_loss
         return loss
 
     def configure_optimizers(self):
