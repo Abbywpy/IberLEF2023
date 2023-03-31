@@ -26,13 +26,27 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 
 class SpanishTweetsCLF(pl.LightningModule):
-    def __init__(self, freeze_lang_model=True, lr=1e-3):
+    def __init__(self, freeze_lang_model=True, clf="simple", lr=1e-3):
         super().__init__()
+
+        self.attr = ['gender', 'profession',
+                     'ideology_binary', 'ideology_multiclass']
+        self.attr_size = [2, 3, 2, 4]
+
         self.MariaRoberta = MariaRoberta()
         self.PolitiBeto = PolitiBeto()
         self.TwitterXLM = TwitterXLM()
-        # need to change this to a classifier
-        self.clf = SimpleCLF(input_size=81264)
+
+        # TODO: fineturn SimpleCLF classifier
+        if clf == "simple":
+            for attr, s in zip(self.attr, self.attr_size):
+                setattr(self, f"clf_{attr}", SimpleCLF(
+                    attr_name=attr, output_size=s))
+
+        # TODO: add cl classifier
+        else:
+            raise NotImplementedError
+
         self.lr = lr
         if freeze_lang_model:
             for param in self.MariaRoberta.parameters():
@@ -52,9 +66,10 @@ class SpanishTweetsCLF(pl.LightningModule):
 
         ret["concated_embeds"] = concat_embeds(**ret)
 
-        ret |= self.clf(**ret)
+        for attr in self.attr:
+            ret |= getattr(self, f'clf_{attr}')(**ret)
 
-        return ret["result"]
+        return [ret[f"pred_{attr}"] for attr in self.attr]
 
     def training_step(self, batch, batch_idx):
         ret = {**batch}
@@ -63,7 +78,8 @@ class SpanishTweetsCLF(pl.LightningModule):
         ret |= self.TwitterXLM(**ret)
         ret["concated_embeds"] = concat_embeds(**ret)
 
-        ret |= self.clf(**ret)
+        for attr in self.attr:
+            ret |= getattr(self, f'clf_{attr}')(**ret)
 
         # TODO: add accuracy, f1, etc.
         loss = 0
@@ -80,7 +96,8 @@ class SpanishTweetsCLF(pl.LightningModule):
         ret |= self.TwitterXLM(**ret)
         ret["concated_embeds"] = concat_embeds(**ret)
 
-        ret |= self.clf(**ret)
+        for attr in self.attr:
+            ret |= getattr(self, f'clf_{attr}')(**ret)
 
         # TODO: add accuracy, f1, etc.
         loss = 0

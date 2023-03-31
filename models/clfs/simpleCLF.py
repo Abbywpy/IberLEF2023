@@ -17,17 +17,21 @@ import torch.nn.functional as F
 
 
 class SimpleCLF(nn.Module):
-    def __init__(self, input_size=768, hidden_size=256, output_size=2, num_layers=2):
+    def __init__(self, attr_name, hidden_size=256, output_size=2, num_layers=2, bias=False):
         super().__init__()
-        self.input_size = input_size
+        self.attr_name = attr_name
         self.hidden_size = hidden_size
         self.output_size = output_size
         self.num_layers = num_layers
 
-        self.fc1 = nn.Linear(input_size, hidden_size)
-        self.fc2 = nn.Linear(hidden_size, output_size)
+
+        self.clf = nn.Sequential()
+        for i in range(num_layers):
+            self.clf.add_module(f"fc{i}", nn.LazyLinear(hidden_size,bias))
+            self.clf.add_module(f"bn{i}", nn.BatchNorm1d(hidden_size))
+            self.clf.add_module(f"relu{i}", nn.ReLU())
+        self.clf.add_module(f"lastlayer", nn.Linear(hidden_size,output_size))
 
     def forward(self, concated_embeds, **kwargs):
-        concated_embeds = F.relu(self.fc1(concated_embeds))
-        pred_gender = self.fc2(concated_embeds)
-        return {"pred_gender": pred_gender, **kwargs}
+        pred = self.clf(concated_embeds)
+        return {f"pred_{self.attr_name}": pred, **kwargs}
