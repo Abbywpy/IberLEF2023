@@ -13,6 +13,7 @@ from pytorch_lightning.loggers import WandbLogger
 
 from models.lang_models.maria import MariaRoberta
 from models.lang_models.politibeto import PolitiBeto
+from models.lang_models.xlmt import TwitterXLM
 from models.clfs.simpleCLF import SimpleCLF
 
 from dataloader import SpanishTweetsDataModule
@@ -29,6 +30,7 @@ class SpanishTweetsCLF(pl.LightningModule):
         super().__init__()
         self.MariaRoberta = MariaRoberta()
         self.PolitiBeto = PolitiBeto()
+        self.TwitterXLM = TwitterXLM()
         # need to change this to a classifier
         self.clf = SimpleCLF(input_size=81264)
         self.lr = lr
@@ -39,10 +41,14 @@ class SpanishTweetsCLF(pl.LightningModule):
             for param in self.PolitiBeto.parameters():
                 param.requires_grad = False
 
+            for param in self.TwitterXLM.parameters():
+                param.requires_grad = False
+
     def forward(self, x):
         ret = {**x}
         ret |= self.MariaRoberta(**ret)
         ret |= self.PolitiBeto(**ret)
+        ret |= self.TwitterXLM(**ret)
 
         ret["concated_embeds"] = concat_embeds(**ret)
 
@@ -54,6 +60,7 @@ class SpanishTweetsCLF(pl.LightningModule):
         ret = {**batch}
         ret |= self.MariaRoberta(**ret)
         ret |= self.PolitiBeto(**ret)
+        ret |= self.TwitterXLM(**ret)
         ret["concated_embeds"] = concat_embeds(**ret)
 
         ret |= self.clf(**ret)
@@ -70,6 +77,7 @@ class SpanishTweetsCLF(pl.LightningModule):
         ret = {**batch}
         ret |= self.MariaRoberta(**ret)
         ret |= self.PolitiBeto(**ret)
+        ret |= self.TwitterXLM(**ret)
         ret["concated_embeds"] = concat_embeds(**ret)
 
         ret |= self.clf(**ret)
