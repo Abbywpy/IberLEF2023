@@ -1,4 +1,4 @@
-from transformers import AutoTokenizer, AutoModelForMaskedLM
+from transformers import AutoTokenizer, AutoModel
 
 import torch
 import torch.nn as nn
@@ -10,7 +10,7 @@ class PolitiBeto(nn.Module):
     def __init__(self, model_name=MODEL_NAME):
         super(PolitiBeto, self).__init__()
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
-        self.model = AutoModelForMaskedLM.from_pretrained(model_name)
+        self.model = AutoModel.from_pretrained(model_name)
 
     def get_embeddings(self, text_batch):
         inputs = self.tokenizer(

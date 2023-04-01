@@ -1,4 +1,4 @@
-from transformers import AutoModelForMaskedLM
+from transformers import AutoModel
 from transformers import AutoTokenizer
 
 import torch
@@ -19,7 +19,7 @@ class TwitterXLM(nn.Module):
     def __init__(self, model_name=MODEL_NAME):
         super(TwitterXLM, self).__init__()
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
-        self.model = AutoModelForMaskedLM.from_pretrained(model_name)
+        self.model = AutoModel.from_pretrained(model_name)
 
     def forward(self, tweet, **kwargs):
         """
