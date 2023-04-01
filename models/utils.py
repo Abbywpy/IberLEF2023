@@ -9,6 +9,6 @@ def mean_pooling(model_output, attention_mask):
     return torch.sum(token_embeddings * input_mask_expanded, 1) / torch.clamp(input_mask_expanded.sum(1), min=1e-9)
 
 
-def concat_embeds(maria_embed, politibeto_embed, **kwargs):
+def concat_embeds(maria_embed, politibeto_embed, xlmt_embed, **kwargs):
     # TODO: need to change become flexiable to the batch size
-    return torch.cat([maria_embed, politibeto_embed], dim=1)
+    return torch.cat([maria_embed, politibeto_embed, xlmt_embed], dim=1)

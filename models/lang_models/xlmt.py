@@ -42,4 +42,4 @@ class TwitterXLM(nn.Module):
             # Normalize embeddings
             sentence_embeddings = F.normalize(sentence_embeddings, p=2, dim=1)
 
-        return {"xlm-t_embed": sentence_embeddings, **kwargs}
+        return {"xlmt_embed": sentence_embeddings, **kwargs}
