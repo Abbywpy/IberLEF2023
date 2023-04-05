@@ -124,8 +124,15 @@ def main(hparams):
     model = SpanishTweetsCLF()
 
     # TODO: change train_dataset_path and val_dataset_path
-    dm = SpanishTweetsDataModule(train_dataset_path="data/practise_data/cleaned/cleaned_encoded_development_train.csv",
-                                 val_dataset_path="data/practise_data/cleaned/cleaned_encoded_development_test.csv", batch_size=hparams.batch_size)
+    if hparams.tiny_train == "yes":
+        dm = SpanishTweetsDataModule(train_dataset_path="data/practise_data/cleaned/cleaned_encoded_development_train.csv",
+                                     val_dataset_path="data/practise_data/cleaned/cleaned_encoded_development_test.csv", batch_size=hparams.batch_size)
+        print("Using tiny train")
+    else:
+        dm = SpanishTweetsDataModule(train_dataset_path="data/full_data/cleaned/train_clean_encoded.csv",
+                                     val_dataset_path="data/full_data/cleaned/val_clean_encoded.csv", batch_size=hparams.batch_size)
+        print("Using full train")
+    
     wandb_logger = WandbLogger(project="spanish-tweets")
     trainer = L.Trainer(accelerator=hparams.accelerator, logger=wandb_logger)
     trainer.fit(model, dm)
@@ -135,6 +142,7 @@ if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument("--accelerator", "-a", default=None)
     parser.add_argument("--batch-size", "-b", type=int, default=None)
+    parser.add_argument("--tiny-train", "-tiny", type=str, default="yes")
     args = parser.parse_args()
 
     main(args)
