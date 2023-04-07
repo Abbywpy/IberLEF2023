@@ -7,7 +7,7 @@ import torch.nn.functional as F
 import torch.utils.data as data
 
 import lightning as L
-import lightning.pytorch as pl
+import lightning.pytorch as pl, seed_everything
 from pytorch_lightning.loggers import WandbLogger
 
 
@@ -24,6 +24,8 @@ from loss import cross_entropy_loss, accuracy
 import os
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
+seed_everything(42, workers=True)  # for reproducibility
+
 
 class SpanishTweetsCLF(pl.LightningModule):
     def __init__(self, freeze_lang_model=True, clf="simple", lr=1e-3):
@@ -37,7 +39,7 @@ class SpanishTweetsCLF(pl.LightningModule):
         self.PolitiBeto = PolitiBeto()
         self.TwitterXLM = TwitterXLM()
 
-        # TODO: fineturn SimpleCLF classifier
+        # TODO: finetune SimpleCLF classifier
         if clf == "simple":
             for attr, s in zip(self.attr, self.attr_size):
                 setattr(self, f"clf_{attr}", SimpleCLF(
