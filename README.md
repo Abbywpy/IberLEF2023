@@ -7,3 +7,5 @@ Run with
 
 python trainer.py -a 'cpu' -b 2
 ```
+
+Add ```-tiny yes``` for a run on the tiny dataset.
