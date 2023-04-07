@@ -6,11 +6,9 @@ import lightning as L
 
 import pandas as pd
 
-# TODO: split full to train and val, change the datapath when load
-
 
 class SpanishTweetsDataModule(L.LightningDataModule):
-    def __init__(self, train_dataset_path="data/full_data/full_data.csv", val_dataset_path="data/full_data/full_data.csv", batch_size=32):
+    def __init__(self, train_dataset_path="data/full_data/cleaned/train_clean_encoded.csv", val_dataset_path="data/full_data/cleaned/val_clean_encoded.csv", batch_size=32):
         super().__init__()
         self.batch_size = batch_size
         self.train_dataset_path = train_dataset_path
