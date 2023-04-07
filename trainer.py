@@ -7,7 +7,7 @@ import torch.nn.functional as F
 import torch.utils.data as data
 
 import lightning as L
-import lightning.pytorch as pl, seed_everything
+import lightning.pytorch as pl
 from pytorch_lightning.loggers import WandbLogger
 
 
@@ -24,7 +24,7 @@ from loss import cross_entropy_loss, accuracy
 import os
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
-seed_everything(42, workers=True)  # for reproducibility
+pl.seed_everything(42, workers=True)  # for reproducibility
 
 
 class SpanishTweetsCLF(pl.LightningModule):
