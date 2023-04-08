@@ -14,10 +14,10 @@ class SimpleCLF(nn.Module):
         self.output_size = output_size
         self.num_layers = num_layers
 
-
         self.clf = nn.Sequential()
+
         for i in range(num_layers):
-            self.clf.add_module(f"fc{i}", nn.Linear(hidden_size, bias))
+            self.clf.add_module(f"fc{i}", nn.LazyLinear(hidden_size, bias))
             self.clf.add_module(f"bn{i}", nn.BatchNorm1d(hidden_size))
             self.clf.add_module(f"relu{i}", nn.ReLU())
             self.clf.add_module(f"dropout{i}", nn.Dropout(dropout_rate))
