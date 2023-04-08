@@ -30,7 +30,7 @@ pl.seed_everything(42, workers=True)  # for reproducibility
 
 
 class SpanishTweetsCLF(pl.LightningModule):
-    def __init__(self, freeze_lang_model=True, clf="simple"):
+    def __init__(self, freeze_lang_model=True, clf="simple", bias=False, dropout_rate=0.15, hidden_size=256, num_layers=2, lr=1e-3):
         super().__init__()
 
         self.attr = ['gender', 'profession',
@@ -43,17 +43,15 @@ class SpanishTweetsCLF(pl.LightningModule):
 
         # TODO: finetune SimpleCLF classifier
         if clf == "simple":
-            with open('simpleCLF_config.yaml') as f:
-                default_config = yaml.load(f, Loader=yaml.FullLoader)
             for attr, s in zip(self.attr, self.attr_size):
                 setattr(self, f"clf_{attr}", SimpleCLF(
-                    attr_name=attr, output_size=s, **default_config["model"]))
+                    attr_name=attr, output_size=s, bias=bias, dropout_rate=dropout_rate, hidden_size=hidden_size, num_layers=num_layers))
 
         # TODO: add cl classifier and config file for it
         else:
             raise NotImplementedError
 
-        self.lr = default_config["lr"]
+        self.lr = lr
         if freeze_lang_model:
             for param in self.MariaRoberta.parameters():
                 param.requires_grad = False
@@ -127,7 +125,13 @@ class SpanishTweetsCLF(pl.LightningModule):
 
 
 def main(hparams):
-    model = SpanishTweetsCLF()
+    if hparams.clf == "simple":
+        with open('simpleCLF_config.yaml') as f:
+            default_config = yaml.load(f, Loader=yaml.FullLoader)
+    else:
+        raise NotImplementedError
+
+    model = SpanishTweetsCLF(**default_config["model"])
 
     # TODO: change train_dataset_path and val_dataset_path
     if hparams.tiny_train:
@@ -154,6 +158,7 @@ if __name__ == '__main__':
     parser.add_argument("--batch-size", "-b", type=int, default=2)
     parser.add_argument("--num_workers", "-n", type=int, default=2)
     parser.add_argument("--epochs", "-e", type=int, default=3)
+    parser.add_argument("--clf", "-c", type=str, default="simple")
     parser.add_argument("--tiny_train", "-tiny", action="store_true")
     args = parser.parse_args()
 
