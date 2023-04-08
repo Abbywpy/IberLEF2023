@@ -10,7 +10,6 @@ import lightning as L
 import lightning.pytorch as pl
 from pytorch_lightning.loggers import WandbLogger
 
-
 from models.lang_models.maria import MariaRoberta
 from models.lang_models.politibeto import PolitiBeto
 from models.lang_models.xlmt import TwitterXLM
@@ -22,6 +21,7 @@ from models.utils import concat_embeds
 from loss import cross_entropy_loss, accuracy
 
 import os
+
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 pl.seed_everything(42, workers=True)  # for reproducibility
@@ -62,26 +62,26 @@ class SpanishTweetsCLF(pl.LightningModule):
 
     def forward(self, x):
         ret = {**x}
-        ret |= self.MariaRoberta(**ret)
-        ret |= self.PolitiBeto(**ret)
-        ret |= self.TwitterXLM(**ret)
+        ret.update(self.MariaRoberta(**ret))
+        ret.update(self.PolitiBeto(**ret))
+        ret.update(self.TwitterXLM(**ret))
 
         ret["concated_embeds"] = concat_embeds(**ret)
 
         for attr in self.attr:
-            ret |= getattr(self, f'clf_{attr}')(**ret)
+            ret.update(getattr(self, f'clf_{attr}')(**ret))
 
         return [ret[f"pred_{attr}"] for attr in self.attr]
 
     def training_step(self, batch, batch_idx):
         ret = {**batch}
-        ret |= self.MariaRoberta(**ret)
-        ret |= self.PolitiBeto(**ret)
-        ret |= self.TwitterXLM(**ret)
+        ret.update(self.MariaRoberta(**ret))
+        ret.update(self.PolitiBeto(**ret))
+        ret.update(self.TwitterXLM(**ret))
         ret["concated_embeds"] = concat_embeds(**ret)
 
         for attr in self.attr:
-            ret |= getattr(self, f'clf_{attr}')(**ret)
+            ret.update(getattr(self, f'clf_{attr}')(**ret))
 
         # TODO: add f1, etc.
         loss = 0
@@ -97,13 +97,13 @@ class SpanishTweetsCLF(pl.LightningModule):
 
     def validation_step(self, batch, batch_idx):
         ret = {**batch}
-        ret |= self.MariaRoberta(**ret)
-        ret |= self.PolitiBeto(**ret)
-        ret |= self.TwitterXLM(**ret)
+        ret.update(self.MariaRoberta(**ret))
+        ret.update(self.PolitiBeto(**ret))
+        ret.update(self.TwitterXLM(**ret))
         ret["concated_embeds"] = concat_embeds(**ret)
 
         for attr in self.attr:
-            ret |= getattr(self, f'clf_{attr}')(**ret)
+            ret.update(getattr(self, f'clf_{attr}')(**ret))
 
         # TODO: add f1, etc.
         loss = 0
@@ -127,14 +127,18 @@ def main(hparams):
 
     # TODO: change train_dataset_path and val_dataset_path
     if hparams.tiny_train == "yes":
-        dm = SpanishTweetsDataModule(train_dataset_path="data/practise_data/cleaned/cleaned_encoded_development_train.csv",
-                                     val_dataset_path="data/practise_data/cleaned/cleaned_encoded_development_test.csv", batch_size=hparams.batch_size)
+        dm = SpanishTweetsDataModule(
+            train_dataset_path="data/practise_data/cleaned/cleaned_encoded_development_train.csv",
+            val_dataset_path="data/practise_data/cleaned/cleaned_encoded_development_test.csv",
+            batch_size=hparams.batch_size)
         print("Using tiny train")
     else:
         dm = SpanishTweetsDataModule(train_dataset_path="data/full_data/cleaned/train_clean_encoded.csv",
-                                     val_dataset_path="data/full_data/cleaned/val_clean_encoded.csv", batch_size=hparams.batch_size)
+                                     val_dataset_path="data/full_data/cleaned/val_clean_encoded.csv",
+                                     num_workers=hparams.num_workers,
+                                     batch_size=hparams.batch_size)
         print("Using full train")
-    
+
     wandb_logger = WandbLogger(project="spanish-tweets")
     trainer = L.Trainer(accelerator=hparams.accelerator, logger=wandb_logger)
     trainer.fit(model, dm)
@@ -145,6 +149,7 @@ if __name__ == '__main__':
     parser.add_argument("--accelerator", "-a", default=None)
     parser.add_argument("--batch-size", "-b", type=int, default=None)
     parser.add_argument("--tiny-train", "-tiny", type=str, default="yes")
+    parser.add_argument("--num_workers", "-n", type=int, default=2)
     args = parser.parse_args()
 
     main(args)
