@@ -8,11 +8,16 @@ import pandas as pd
 
 
 class SpanishTweetsDataModule(L.LightningDataModule):
-    def __init__(self, train_dataset_path="data/full_data/cleaned/train_clean_encoded.csv", val_dataset_path="data/full_data/cleaned/val_clean_encoded.csv", batch_size=32):
+    def __init__(self,
+                 train_dataset_path="data/full_data/cleaned/train_clean_encoded.csv",
+                 val_dataset_path="data/full_data/cleaned/val_clean_encoded.csv",
+                 num_workers=0,
+                 batch_size=2):
         super().__init__()
         self.batch_size = batch_size
         self.train_dataset_path = train_dataset_path
         self.val_dataset_path = val_dataset_path
+        self.num_workers = num_workers
 
     def setup(self, stage=None):
         # Assign train/val datasets for use in dataloaders
@@ -23,7 +28,7 @@ class SpanishTweetsDataModule(L.LightningDataModule):
         return data.DataLoader(
             self.train_dataset,
             batch_size=self.batch_size,
-            num_workers=4,
+            num_workers=self.num_workers,
             shuffle=True,
         )
 
@@ -31,7 +36,7 @@ class SpanishTweetsDataModule(L.LightningDataModule):
         return data.DataLoader(
             self.val_dataset,
             batch_size=self.batch_size,
-            num_workers=4,
+            num_workers=self.num_workers,
             shuffle=False,
         )
 
