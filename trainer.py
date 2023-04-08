@@ -1,6 +1,8 @@
 import itertools
 from argparse import ArgumentParser
 
+import yaml
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -28,7 +30,7 @@ pl.seed_everything(42, workers=True)  # for reproducibility
 
 
 class SpanishTweetsCLF(pl.LightningModule):
-    def __init__(self, freeze_lang_model=True, clf="simple", lr=1e-3):
+    def __init__(self, freeze_lang_model=True, clf="simple"):
         super().__init__()
 
         self.attr = ['gender', 'profession',
@@ -41,15 +43,17 @@ class SpanishTweetsCLF(pl.LightningModule):
 
         # TODO: finetune SimpleCLF classifier
         if clf == "simple":
+            with open('simpleCLF_config.yaml') as f:
+                default_config = yaml.load(f, Loader=yaml.FullLoader)
             for attr, s in zip(self.attr, self.attr_size):
                 setattr(self, f"clf_{attr}", SimpleCLF(
-                    attr_name=attr, output_size=s))
+                    attr_name=attr, output_size=s, **default_config["model"]))
 
-        # TODO: add cl classifier
+        # TODO: add cl classifier and config file for it
         else:
             raise NotImplementedError
 
-        self.lr = lr
+        self.lr = default_config["lr"]
         if freeze_lang_model:
             for param in self.MariaRoberta.parameters():
                 param.requires_grad = False
@@ -126,7 +130,7 @@ def main(hparams):
     model = SpanishTweetsCLF()
 
     # TODO: change train_dataset_path and val_dataset_path
-    if hparams.tiny_train == "yes":
+    if hparams.tiny_train:
         dm = SpanishTweetsDataModule(
             train_dataset_path="data/practise_data/cleaned/cleaned_encoded_development_train.csv",
             val_dataset_path="data/practise_data/cleaned/cleaned_encoded_development_test.csv",
@@ -140,16 +144,17 @@ def main(hparams):
         print("Using full train")
 
     wandb_logger = WandbLogger(project="spanish-tweets")
-    trainer = L.Trainer(accelerator=hparams.accelerator, logger=wandb_logger)
+    trainer = L.Trainer(accelerator=hparams.accelerator, logger=wandb_logger, max_epochs=hparams.epochs)
     trainer.fit(model, dm)
 
 
 if __name__ == '__main__':
     parser = ArgumentParser()
-    parser.add_argument("--accelerator", "-a", default=None)
-    parser.add_argument("--batch-size", "-b", type=int, default=None)
-    parser.add_argument("--tiny-train", "-tiny", type=str, default="yes")
+    parser.add_argument("--accelerator", "-a", default="cpu")
+    parser.add_argument("--batch-size", "-b", type=int, default=2)
     parser.add_argument("--num_workers", "-n", type=int, default=2)
+    parser.add_argument("--epochs", "-e", type=int, default=3)
+    parser.add_argument("--tiny_train", "-tiny", action="store_true")
     args = parser.parse_args()
 
     main(args)
