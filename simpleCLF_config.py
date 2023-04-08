@@ -6,9 +6,9 @@ default_config = {
         'dropout_rate': 0.15,
         'num_layers': 2,
         'bias': False,
+        'lr': 1e-3,
 
     },
-    'lr': 1e-3,
     'max_length': 128,
 
 }
