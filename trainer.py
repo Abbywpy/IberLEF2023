@@ -154,12 +154,12 @@ def main(hparams):
 
 if __name__ == '__main__':
     parser = ArgumentParser()
-    parser.add_argument("--accelerator", "-a", default="cpu")
-    parser.add_argument("--batch-size", "-b", type=int, default=2)
-    parser.add_argument("--num_workers", "-n", type=int, default=2)
-    parser.add_argument("--epochs", "-e", type=int, default=3)
-    parser.add_argument("--clf", "-c", type=str, default="simple")
-    parser.add_argument("--tiny_train", "-tiny", action="store_true")
+    parser.add_argument("--accelerator", "-a", default="cpu", help="Change to GPU if you have one (default: cpu)")
+    parser.add_argument("--batch-size", "-b", type=int, default=2, help="Batch size for training (default: 2)")
+    parser.add_argument("--num_workers", "-n", type=int, default=2, help="Number of workers for dataloader (default: 2)")
+    parser.add_argument("--epochs", "-e", type=int, default=3, help="Number of epochs to train (default: 3)")
+    parser.add_argument("--clf", "-c", type=str, default="simple", help="Classifier to use (default: simple)")
+    parser.add_argument("--tiny_train", "-tiny", action="store_true", help="Use tiny train dataset (default: False)")
     args = parser.parse_args()
 
     main(args)
