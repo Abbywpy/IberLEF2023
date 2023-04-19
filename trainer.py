@@ -38,9 +38,9 @@ class SpanishTweetsCLF(pl.LightningModule):
                      'ideology_binary', 'ideology_multiclass']
         self.attr_size = [2, 3, 2, 4]
 
-        self.MariaRoberta = MariaRoberta()
-        self.PolitiBeto = PolitiBeto()
-        self.TwitterXLM = TwitterXLM()
+        self.MariaRoberta = MariaRoberta().to("cuda")
+        self.PolitiBeto = PolitiBeto().to("cuda")
+        self.TwitterXLM = TwitterXLM().to("cuda")
         
         # Add torchmetrics instances for precision, recall, and F1-score
         self.metrics = {}
@@ -94,16 +94,23 @@ class SpanishTweetsCLF(pl.LightningModule):
         for attr in self.attr:
             ret.update(getattr(self, f'clf_{attr}')(**ret))
 
-        # TODO: add f1, etc.
         loss = 0
         for attr in self.attr:
             attr_loss = cross_entropy_loss(ret[f"pred_{attr}"], ret[attr])
+            loss += attr_loss
+            
+            # Calculate and log precision, recall, and F1-score
+            precision = self.metrics[f"{attr}_precision"](ret[f"pred_{attr}"], ret[attr])
+            recall = self.metrics[f"{attr}_recall"](ret[f"pred_{attr}"], ret[attr])
+            f1 = self.metrics[f"{attr}_f1"](ret[f"pred_{attr}"], ret[attr])
 
             self.log(f"train_{attr}_loss", attr_loss)
             self.log(f"train_{attr}_acc", accuracy(
                 ret[f"pred_{attr}"], ret[attr]))
+            self.log(f"train_{attr}_precision", precision)
+            self.log(f"train_{attr}_recall", recall)
+            self.log(f"train_{attr}_f1", f1)
 
-            loss += attr_loss
         return loss
 
     def validation_step(self, batch, batch_idx):
@@ -177,7 +184,7 @@ def main(hparams):
 
     wandb_logger = WandbLogger(project="spanish-tweets")
     # TODO: after hparam search the epochs from default_config can be used
-    trainer = L.Trainer(accelerator=hparams.accelerator, logger=wandb_logger, max_epochs=hparams.epochs)
+    trainer = L.Trainer(accelerator=hparams.accelerator, devices=1, logger=wandb_logger, max_epochs=hparams.epochs)
     trainer.fit(model, dm)
 
 
