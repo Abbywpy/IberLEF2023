@@ -38,9 +38,9 @@ class SpanishTweetsCLF(pl.LightningModule):
                      'ideology_binary', 'ideology_multiclass']
         self.attr_size = [2, 3, 2, 4]
 
-        self.MariaRoberta = MariaRoberta().to("cuda")
-        self.PolitiBeto = PolitiBeto().to("cuda")
-        self.TwitterXLM = TwitterXLM().to("cuda")
+        self.MariaRoberta = MariaRoberta()
+        self.PolitiBeto = PolitiBeto()
+        self.TwitterXLM = TwitterXLM()
         
         # Add torchmetrics instances for precision, recall, and F1-score
         self.metrics = {}
