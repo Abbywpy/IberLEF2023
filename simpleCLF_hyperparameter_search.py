@@ -7,9 +7,11 @@ import yaml
 
 def objective(trial: optuna.trial.Trial) -> float:
     # search space for hyperparameters
+    # TODO: remove this part for actual hp search
     num_layers = trial.suggest_int("num_layers", 1, 2, step=1)
     #batch_size = trial.suggest_int("batch_size", 16, 62, step=16)
 
+    # TODO: uncomment this part for actual hp search
    # lr = trial.suggest_categorical("learning_rate", [1e-3, 2e-5, 3e-5])
     #dropout = trial.suggest_float("dropout", 0.1, 0.2, step=0.05)
     #epochs = trial.suggest_int("epochs", 5, 10, step=1)
