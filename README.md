@@ -16,3 +16,4 @@ Argument description:
 * -e: number of epochs
 * -c: model architecture (simple for simple classifier)
 * -tiny: activates use of tiny dataset (for testing purposes)
+* -practise: activates use of practise dataset (subset of full dataset)
