@@ -25,8 +25,8 @@ def objective(trial: optuna.trial.Trial) -> float:
     # "data/hp_data/hp_cleaned_encoded_train.csv"
     # "data/hp_data/hp_cleaned_encoded_train.csv"
     dm = SpanishTweetsDataModule(
-            train_dataset_path="data/practise_data/cleaned/tiny_cleaned_encoded_train.csv", # path leads to *very* small subset of practise data
-            val_dataset_path="data/practise_data/cleaned/tiny_cleaned_encoded_development.csv", # path leads to *very* small subset of practise data
+            train_dataset_path="data/tiny_data/tiny_cleaned_encoded_development.csv", # path leads to *very* small subset of practise data
+            val_dataset_path="data/tiny_data/tiny_cleaned_encoded_train.csv", # path leads to *very* small subset of practise data
             batch_size=2)
 
     # Create the Trainer
@@ -61,7 +61,7 @@ if __name__ == "__main__":
     
     best_hyperparams = trial.params
     
-    with open("best_hyperparams.yaml", "w") as f:
+    with open("best_hyperparams_simpleCLF.yaml", "w") as f:
         yaml.dump(best_hyperparams, f)
         
         print(f"The best hyperparameters are saved in 'best_hyperparams_simpleCLF.yaml'." )
