@@ -31,7 +31,9 @@ class MariaRoberta(nn.Module):
         :param
         tweet: a string with the sentence to be embedded
         """
-        logger.info(tweet.device)
+        logger.info(tweet[0].device)
+        tweet = [t for t in tweet]
+        logger.info(tweet[0].device)
         encoded_input = self.tokenizer(
             tweet, padding=True, truncation=True, max_length=128, return_tensors='pt')
 
