@@ -21,7 +21,7 @@ class MariaRoberta(nn.Module):
 
     def __init__(self, model_name=MODEL_NAME):
         super(MariaRoberta, self).__init__()
-        self.tokenizer = AutoTokenizer.from_pretrained(model_name).to(device)
+        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
         self.model = AutoModel.from_pretrained(model_name)
 
     def forward(self, tweet, **kwargs):
@@ -31,7 +31,7 @@ class MariaRoberta(nn.Module):
         :param
         tweet: a string with the sentence to be embedded
         """
-
+        logger.info(tweet.device)
         encoded_input = self.tokenizer(
             tweet, padding=True, truncation=True, max_length=128, return_tensors='pt')
 
