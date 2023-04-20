@@ -23,6 +23,8 @@ from dataloader import SpanishTweetsDataModule
 from models.utils import concat_embeds
 from loss import cross_entropy_loss, accuracy
 
+from loguru import logger
+
 import os
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
@@ -86,6 +88,7 @@ class SpanishTweetsCLF(pl.LightningModule):
 
     def training_step(self, batch, batch_idx):
         ret = {**batch}
+        logger.info([f"{k}_{v.device}" for k, v in ret.items()])
         ret.update(self.MariaRoberta(**ret))
         ret.update(self.PolitiBeto(**ret))
         ret.update(self.TwitterXLM(**ret))

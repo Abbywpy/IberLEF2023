@@ -35,7 +35,7 @@ class MariaRoberta(nn.Module):
             tweet, padding=True, truncation=True, max_length=128, return_tensors='pt')
 
         with torch.no_grad():
-            logger.info([v.device for k, v in encoded_input.items()])
+            logger.info([f"{k}_{v.device}" for k, v in encoded_input.items()])
             model_output = self.model(**encoded_input)
 
             # Perform pooling
