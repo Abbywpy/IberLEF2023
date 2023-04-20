@@ -5,7 +5,7 @@ All requirements were installed in a Python 3.8 environment.
 Run with
 
 ```python
-
+conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
 python trainer.py -a 'cpu' -b 2 -n 2 -e 3 -c 'simple' -tiny 
 ```
 

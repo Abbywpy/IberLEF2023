@@ -23,9 +23,12 @@ from dataloader import SpanishTweetsDataModule
 from models.utils import concat_embeds
 from loss import cross_entropy_loss, accuracy
 
+from loguru import logger
+
 import os
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
+DEVICE = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
 
 pl.seed_everything(42, workers=True)  # for reproducibility
 
@@ -45,9 +48,9 @@ class SpanishTweetsCLF(pl.LightningModule):
         # Add torchmetrics instances for precision, recall, and F1-score
         self.metrics = {}
         for attr in self.attr:
-            self.metrics[f"{attr}_precision"] = torchmetrics.Precision(num_classes=self.attr_size[self.attr.index(attr)], average='macro', task="multiclass")
-            self.metrics[f"{attr}_recall"] = torchmetrics.Recall(num_classes=self.attr_size[self.attr.index(attr)], average='macro', task="multiclass")
-            self.metrics[f"{attr}_f1"] = torchmetrics.classification.MulticlassF1Score(num_classes=self.attr_size[self.attr.index(attr)], average='macro', task="multiclass")
+            self.metrics[f"{attr}_precision"] = torchmetrics.Precision(num_classes=self.attr_size[self.attr.index(attr)], average='macro', task="multiclass").to(DEVICE)
+            self.metrics[f"{attr}_recall"] = torchmetrics.Recall(num_classes=self.attr_size[self.attr.index(attr)], average='macro', task="multiclass").to(DEVICE)
+            self.metrics[f"{attr}_f1"] = torchmetrics.classification.MulticlassF1Score(num_classes=self.attr_size[self.attr.index(attr)], average='macro', task="multiclass").to(DEVICE)
 
         # TODO: finetune SimpleCLF classifier
         if clf == "simple":
@@ -71,7 +74,7 @@ class SpanishTweetsCLF(pl.LightningModule):
                 param.requires_grad = False
 
     def forward(self, x):
-        ret = {**x}
+        ret = {"device": DEVICE, **x}
         ret.update(self.MariaRoberta(**ret))
         ret.update(self.PolitiBeto(**ret))
         ret.update(self.TwitterXLM(**ret))
@@ -85,7 +88,7 @@ class SpanishTweetsCLF(pl.LightningModule):
         return [ret[f"pred_{attr}"] for attr in self.attr]
 
     def training_step(self, batch, batch_idx):
-        ret = {**batch}
+        ret = {"device": DEVICE, **batch}
         ret.update(self.MariaRoberta(**ret))
         ret.update(self.PolitiBeto(**ret))
         ret.update(self.TwitterXLM(**ret))
@@ -114,7 +117,7 @@ class SpanishTweetsCLF(pl.LightningModule):
         return loss
 
     def validation_step(self, batch, batch_idx):
-        ret = {**batch}
+        ret = {"device": DEVICE, **batch}
         ret.update(self.MariaRoberta(**ret))
         ret.update(self.PolitiBeto(**ret))
         ret.update(self.TwitterXLM(**ret))
@@ -128,7 +131,6 @@ class SpanishTweetsCLF(pl.LightningModule):
             attr_loss = cross_entropy_loss(ret[f"pred_{attr}"], ret[attr])
             loss += attr_loss
             
-            # Calculate and log precision, recall, and F1-score
             precision = self.metrics[f"{attr}_precision"](ret[f"pred_{attr}"], ret[attr])
             recall = self.metrics[f"{attr}_recall"](ret[f"pred_{attr}"], ret[attr])
             f1 = self.metrics[f"{attr}_f1"](ret[f"pred_{attr}"], ret[attr])

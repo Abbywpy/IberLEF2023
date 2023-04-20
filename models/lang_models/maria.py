@@ -5,11 +5,12 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+from loguru import logger
+
 from models.utils import mean_pooling
 
 
 MODEL_NAME = 'PlanTL-GOB-ES/roberta-base-bne'
-
 
 class MariaRoberta(nn.Module):
     """
@@ -21,16 +22,15 @@ class MariaRoberta(nn.Module):
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
         self.model = AutoModel.from_pretrained(model_name)
 
-    def forward(self, tweet, **kwargs):
+    def forward(self, tweet, device, **kwargs):
         """
         Return the embedding part of the model
 
         :param
         tweet: a string with the sentence to be embedded
         """
-
         encoded_input = self.tokenizer(
-            tweet, padding=True, truncation=True, max_length=128, return_tensors='pt')
+            tweet, padding=True, truncation=True, max_length=128, return_tensors='pt').to(device)
 
         with torch.no_grad():
             model_output = self.model(**encoded_input)

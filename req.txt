@@ -1,4 +1,4 @@
-torch
+loguru==0.7.0
 pandas==1.5.3
 transformers==4.27.2
 truecase==0.0.14
