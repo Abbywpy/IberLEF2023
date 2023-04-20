@@ -48,9 +48,9 @@ class SpanishTweetsCLF(pl.LightningModule):
         # Add torchmetrics instances for precision, recall, and F1-score
         self.metrics = {}
         for attr in self.attr:
-            self.metrics[f"{attr}_precision"] = torchmetrics.Precision(num_classes=self.attr_size[self.attr.index(attr)], average='macro', task="multiclass")
-            self.metrics[f"{attr}_recall"] = torchmetrics.Recall(num_classes=self.attr_size[self.attr.index(attr)], average='macro', task="multiclass")
-            self.metrics[f"{attr}_f1"] = torchmetrics.classification.MulticlassF1Score(num_classes=self.attr_size[self.attr.index(attr)], average='macro', task="multiclass")
+            self.metrics[f"{attr}_precision"] = torchmetrics.Precision(num_classes=self.attr_size[self.attr.index(attr)], average='macro', task="multiclass").to(DEVICE)
+            self.metrics[f"{attr}_recall"] = torchmetrics.Recall(num_classes=self.attr_size[self.attr.index(attr)], average='macro', task="multiclass").to(DEVICE)
+            self.metrics[f"{attr}_f1"] = torchmetrics.classification.MulticlassF1Score(num_classes=self.attr_size[self.attr.index(attr)], average='macro', task="multiclass").to(DEVICE)
 
         # TODO: finetune SimpleCLF classifier
         if clf == "simple":
@@ -131,9 +131,6 @@ class SpanishTweetsCLF(pl.LightningModule):
             attr_loss = cross_entropy_loss(ret[f"pred_{attr}"], ret[attr])
             loss += attr_loss
             
-            # Calculate and log precision, recall, and F1-score
-            logger.info(ret[f"pred_{attr}"].device)
-            logger.info(ret[attr].device)
             precision = self.metrics[f"{attr}_precision"](ret[f"pred_{attr}"], ret[attr])
             recall = self.metrics[f"{attr}_recall"](ret[f"pred_{attr}"], ret[attr])
             f1 = self.metrics[f"{attr}_f1"](ret[f"pred_{attr}"], ret[attr])
