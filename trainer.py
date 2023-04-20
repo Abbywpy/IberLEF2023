@@ -132,6 +132,8 @@ class SpanishTweetsCLF(pl.LightningModule):
             loss += attr_loss
             
             # Calculate and log precision, recall, and F1-score
+            logger.info(ret[f"pred_{attr}"].device)
+            logger.info(ret[attr].device)
             precision = self.metrics[f"{attr}_precision"](ret[f"pred_{attr}"], ret[attr])
             recall = self.metrics[f"{attr}_recall"](ret[f"pred_{attr}"], ret[attr])
             f1 = self.metrics[f"{attr}_f1"](ret[f"pred_{attr}"], ret[attr])
