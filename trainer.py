@@ -74,7 +74,6 @@ class SpanishTweetsCLF(pl.LightningModule):
 
     def forward(self, x):
         ret = {**x}
-        logger.info([f"{k}: {v.device} forward" for k, v in ret.items()])
         ret.update(self.MariaRoberta(**ret))
         ret.update(self.PolitiBeto(**ret))
         ret.update(self.TwitterXLM(**ret))
@@ -89,7 +88,6 @@ class SpanishTweetsCLF(pl.LightningModule):
 
     def training_step(self, batch, batch_idx):
         ret = {**batch}
-        logger.info([f"{k}: {v.device} training_step" for k, v in ret.items()])
         ret.update(self.MariaRoberta(**ret))
         ret.update(self.PolitiBeto(**ret))
         ret.update(self.TwitterXLM(**ret))
@@ -119,7 +117,6 @@ class SpanishTweetsCLF(pl.LightningModule):
 
     def validation_step(self, batch, batch_idx):
         ret = {**batch}
-        logger.info([f"{k}: {v.device} validation_step" for k, v in ret.items()])
         ret.update(self.MariaRoberta(**ret))
         ret.update(self.PolitiBeto(**ret))
         ret.update(self.TwitterXLM(**ret))
