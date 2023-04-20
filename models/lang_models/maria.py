@@ -21,7 +21,7 @@ class MariaRoberta(nn.Module):
 
     def __init__(self, model_name=MODEL_NAME):
         super(MariaRoberta, self).__init__()
-        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+        self.tokenizer = AutoTokenizer.from_pretrained(model_name).to(device)
         self.model = AutoModel.from_pretrained(model_name)
 
     def forward(self, tweet, **kwargs):
