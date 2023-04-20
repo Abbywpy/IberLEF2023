@@ -74,6 +74,7 @@ class SpanishTweetsCLF(pl.LightningModule):
 
     def forward(self, x):
         ret = {**x}
+        logger.info([f"{k}_{v.device}" for k, v in ret.items()])
         ret.update(self.MariaRoberta(**ret))
         ret.update(self.PolitiBeto(**ret))
         ret.update(self.TwitterXLM(**ret))
