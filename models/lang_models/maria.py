@@ -31,11 +31,8 @@ class MariaRoberta(nn.Module):
         :param
         tweet: a string with the sentence to be embedded
         """
-        logger.info(tweet[0].device)
-        tweet = [t for t in tweet]
-        logger.info(tweet[0].device)
         encoded_input = self.tokenizer(
-            tweet, padding=True, truncation=True, max_length=128, return_tensors='pt')
+            tweet, padding=True, truncation=True, max_length=128, return_tensors='pt').to(device)
 
         with torch.no_grad():
             logger.info([f"{k}_{v.device}" for k, v in encoded_input.items()])
