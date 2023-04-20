@@ -11,7 +11,8 @@ from models.utils import mean_pooling
 
 
 MODEL_NAME = 'PlanTL-GOB-ES/roberta-base-bne'
-
+device = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
+logger.error(device)
 
 class MariaRoberta(nn.Module):
     """
