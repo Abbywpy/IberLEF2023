@@ -11,8 +11,6 @@ from models.utils import mean_pooling
 
 
 MODEL_NAME = 'PlanTL-GOB-ES/roberta-base-bne'
-device = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
-logger.error(device)
 
 class MariaRoberta(nn.Module):
     """
@@ -24,7 +22,7 @@ class MariaRoberta(nn.Module):
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
         self.model = AutoModel.from_pretrained(model_name)
 
-    def forward(self, tweet, **kwargs):
+    def forward(self, tweet, device, **kwargs):
         """
         Return the embedding part of the model
 
@@ -35,7 +33,6 @@ class MariaRoberta(nn.Module):
             tweet, padding=True, truncation=True, max_length=128, return_tensors='pt').to(device)
 
         with torch.no_grad():
-            logger.info([f"{k}_{v.device}" for k, v in encoded_input.items()])
             model_output = self.model(**encoded_input)
 
             # Perform pooling

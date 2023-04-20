@@ -21,7 +21,7 @@ class TwitterXLM(nn.Module):
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
         self.model = AutoModel.from_pretrained(model_name)
 
-    def forward(self, tweet, **kwargs):
+    def forward(self, tweet, device, **kwargs):
         """
         Return the embedding part of the model
 
@@ -30,7 +30,7 @@ class TwitterXLM(nn.Module):
         """
 
         encoded_input = self.tokenizer(
-            tweet, padding=True, truncation=True, max_length=128, return_tensors='pt')
+            tweet, padding=True, truncation=True, max_length=128, return_tensors='pt').to(device)
 
         with torch.no_grad():
             model_output = self.model(**encoded_input)

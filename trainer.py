@@ -28,6 +28,7 @@ from loguru import logger
 import os
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
+DEVICE = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
 
 pl.seed_everything(42, workers=True)  # for reproducibility
 
@@ -73,7 +74,7 @@ class SpanishTweetsCLF(pl.LightningModule):
                 param.requires_grad = False
 
     def forward(self, x):
-        ret = {**x}
+        ret = {"device": DEVICE, **x}
         ret.update(self.MariaRoberta(**ret))
         ret.update(self.PolitiBeto(**ret))
         ret.update(self.TwitterXLM(**ret))
@@ -87,7 +88,7 @@ class SpanishTweetsCLF(pl.LightningModule):
         return [ret[f"pred_{attr}"] for attr in self.attr]
 
     def training_step(self, batch, batch_idx):
-        ret = {**batch}
+        ret = {"device": DEVICE, **batch}
         ret.update(self.MariaRoberta(**ret))
         ret.update(self.PolitiBeto(**ret))
         ret.update(self.TwitterXLM(**ret))
@@ -116,7 +117,7 @@ class SpanishTweetsCLF(pl.LightningModule):
         return loss
 
     def validation_step(self, batch, batch_idx):
-        ret = {**batch}
+        ret = {"device": DEVICE, **batch}
         ret.update(self.MariaRoberta(**ret))
         ret.update(self.PolitiBeto(**ret))
         ret.update(self.TwitterXLM(**ret))

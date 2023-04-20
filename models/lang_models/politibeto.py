@@ -12,9 +12,9 @@ class PolitiBeto(nn.Module):
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
         self.model = AutoModel.from_pretrained(model_name)
 
-    def get_embeddings(self, text_batch):
+    def get_embeddings(self, device, text_batch):
         inputs = self.tokenizer(
-            text_batch, return_tensors="pt", padding=True, truncation=True, max_length=128)
+            text_batch, return_tensors="pt", padding=True, truncation=True, max_length=128).to(device)
         with torch.no_grad():
             outputs = self.model(**inputs)
         return outputs[0]

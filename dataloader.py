@@ -5,7 +5,7 @@ import torch.utils.data as data
 import lightning as L
 
 import pandas as pd
-
+from loguru import logger
 
 class SpanishTweetsDataModule(L.LightningDataModule):
     def __init__(self,
