@@ -19,7 +19,8 @@ def objective(trial: optuna.trial.Trial) -> float:
     dm = SpanishTweetsDataModule(
             train_dataset_path="data/hp_data/hp_cleaned_encoded_train.csv", # path leads to subset of full data especially created for hp search
             val_dataset_path="data/hp_data/hp_cleaned_encoded_development.csv", # path leads to subset of full data especially created for hp search
-            batch_size=2)
+            batch_size=2,
+            num_workers=8)
 
     # Create the Trainer
     trainer = L.Trainer(
