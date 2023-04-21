@@ -172,7 +172,7 @@ def main(hparams):
             val_dataset_path="data/tiny_data/tiny_cleaned_encoded_development.csv", # path leads to *very* small subset of practise data
             batch_size=hparams.batch_size)
         print("Using tiny train")
-    elif hparams.practise:
+    elif hparams.practise_train:
         dm = SpanishTweetsDataModule(
             train_dataset_path="data/practise_data/cleaned/cleaned_encoded_development_train.csv", # path leads to  practise data
             val_dataset_path="data/practise_data/cleaned/cleaned_encoded_development_test.csv", # path leads to practise data
