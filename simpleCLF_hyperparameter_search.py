@@ -7,36 +7,24 @@ import yaml
 
 def objective(trial: optuna.trial.Trial) -> float:
     # search space for hyperparameters
-    # TODO: remove this part for actual hp search
+    lr = trial.suggest_categorical("learning_rate", [1e-3, 2e-5, 3e-5])
+    dropout = trial.suggest_float("dropout", 0.1, 0.2, step=0.05)
+    epochs = trial.suggest_int("epochs", 5, 10, step=1)
+    hidden_size = trial.suggest_int("hidden_size", 128, 768, step=128)
     num_layers = trial.suggest_int("num_layers", 1, 2, step=1)
-    #batch_size = trial.suggest_int("batch_size", 16, 62, step=16)
+    batch_size = trial.suggest_int("batch_size", 16, 62, step=16)
 
-    # TODO: uncomment this part for actual hp search
-   # lr = trial.suggest_categorical("learning_rate", [1e-3, 2e-5, 3e-5])
-    #dropout = trial.suggest_float("dropout", 0.1, 0.2, step=0.05)
-    #epochs = trial.suggest_int("epochs", 5, 10, step=1)
-    #hidden_size = trial.suggest_int("hidden_size", 128, 768, step=128)
-    #num_layers = trial.suggest_int("num_layers", 1, 2, step=1)
-    #batch_size = trial.suggest_int("batch_size", 16, 62, step=16)
+    model = SpanishTweetsCLF(clf="simple", freeze_lang_model=True, lr=lr, dropout_rate=dropout, hidden_size=hidden_size, num_layers=num_layers, bias=False)
 
-    #model = SpanishTweetsCLF(clf="simple", freeze_lang_model=True, lr=lr, dropout_rate=dropout, hidden_size=hidden_size, num_layers=num_layers, bias=False)
-    
-    model = SpanishTweetsCLF(clf="simple", freeze_lang_model=True, lr=1e-3, dropout_rate=0.2, hidden_size=128, num_layers=num_layers, bias=False)
-
-    # TODO: change path to larger data set for actual hp search
-    # "data/hp_data/hp_cleaned_encoded_train.csv"
-    # "data/hp_data/hp_cleaned_encoded_train.csv"
     dm = SpanishTweetsDataModule(
-            train_dataset_path="data/tiny_data/tiny_cleaned_encoded_development.csv", # path leads to *very* small subset of practise data
-            val_dataset_path="data/tiny_data/tiny_cleaned_encoded_train.csv", # path leads to *very* small subset of practise data
+            train_dataset_path="data/hp_data/hp_cleaned_encoded_train.csv", # path leads to subset of full data especially created for hp search
+            val_dataset_path="data/hp_data/hp_cleaned_encoded_development.csv", # path leads to subset of full data especially created for hp search
             batch_size=2)
 
     # Create the Trainer
-    # TODO: Add "gpus=1" argument for gpu usage
     trainer = L.Trainer(
-        max_epochs=5, # TODO: change back to "epochs"
-        gpus=1
-    )
+        max_epochs=epochs,
+        accelerator="gpu")
     
     trainer.fit(model, dm)
 
@@ -50,8 +38,8 @@ def objective(trial: optuna.trial.Trial) -> float:
 
 
 if __name__ == "__main__":
-    study = optuna.create_study(direction="maximize", study_name="SpanishTweetsCLF")
-    study.optimize(objective, n_trials=1) # TODO: change n_trials to 10
+    study = optuna.create_study(direction="maximize", study_name="SpanishTweetsCLF", load_if_exists=True)
+    study.optimize(objective, n_trials=10)
 
     print("Number of finished trials: ", len(study.trials))
     print("Best trial:")
