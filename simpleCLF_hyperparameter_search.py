@@ -35,7 +35,7 @@ def objective(trial: optuna.trial.Trial) -> float:
     # TODO: Add "gpus=1" argument for gpu usage
     trainer = L.Trainer(
         max_epochs=5, # TODO: change back to "epochs"
-        gpus=1
+        accelerator="gpu"
     )
     
     trainer.fit(model, dm)
