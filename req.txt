@@ -5,3 +5,4 @@ truecase==0.0.14
 tweet-preprocessor==0.6.0
 lightning==2.0.0
 wandb==0.14.0
+optuna
