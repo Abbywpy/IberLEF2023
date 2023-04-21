@@ -14,7 +14,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-
+import wandb
 
 class SimpleCLF(nn.Module):
     def __init__(self, attr_name, hidden_size=256, output_size=2, num_layers=2, bias=False):
@@ -24,14 +24,16 @@ class SimpleCLF(nn.Module):
         self.output_size = output_size
         self.num_layers = num_layers
 
-
         self.clf = nn.Sequential()
         for i in range(num_layers):
-            self.clf.add_module(f"fc{i}", nn.LazyLinear(hidden_size,bias))
+            self.clf.add_module(f"fc{i}", nn.LazyLinear(hidden_size, bias))
             self.clf.add_module(f"bn{i}", nn.BatchNorm1d(hidden_size))
             self.clf.add_module(f"relu{i}", nn.ReLU())
-        self.clf.add_module(f"lastlayer", nn.Linear(hidden_size,output_size))
+        self.clf.add_module(f"lastlayer", nn.Linear(hidden_size, output_size))
 
-    def forward(self, concated_embeds, **kwargs):
+    def forward(self, concated_embeds, y, total_loss=0, **kwargs):
         pred = self.clf(concated_embeds)
-        return {f"pred_{self.attr_name}": pred, **kwargs}
+        loss = F.cross_entropy(pred, y)
+        status = "train" if self.training else "val"
+        wandb.log({f"{status}/{self.attr_name}_loss": loss})
+        return {f"pred_{self.attr_name}": pred, "total_loss": total_loss+loss, **kwargs}
