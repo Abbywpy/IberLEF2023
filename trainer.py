@@ -158,7 +158,10 @@ def main(hparams):
     if hparams.clf == "simple":
         with open('best_hyperparams_simpleCLF.yaml') as f:
             default_config = yaml.load(f, Loader=yaml.FullLoader)
-            
+
+            batch_size = hparams.batch_size if hparams.batch_size else default_config["batch_size"]
+            epochs = hparams.epochs if hparams.epochs else default_config["epochs"]
+
             # TODO: after hparam search remove this model and uncomment the model, epochs and batch_size below
             #model = SpanishTweetsCLF(clf="simple", freeze_lang_model=True, lr=1e-3, dropout_rate=0.2, hidden_size=128, num_layers=2, bias=False)
 
@@ -170,9 +173,7 @@ def main(hparams):
                                      hidden_size=default_config["hidden_size"],
                                      num_layers=default_config["num_layers"],
                                      bias=False)
-            
-            epochs = default_config["epochs"]
-            batch_size = default_config["batch_size"]
+
     else:
         raise NotImplementedError
     
@@ -180,18 +181,20 @@ def main(hparams):
         dm = SpanishTweetsDataModule(
             train_dataset_path="data/tiny_data/tiny_cleaned_encoded_train.csv", # path leads to *very* small subset of practise data
             val_dataset_path="data/tiny_data/tiny_cleaned_encoded_development.csv", # path leads to *very* small subset of practise data
-            batch_size=default_config["batch_size"])
+            num_workers=hparams.num_workers,
+            batch_size=batch_size)
         print("Using tiny train")
     elif hparams.practise_train:
         dm = SpanishTweetsDataModule(
             train_dataset_path="data/practise_data/cleaned/cleaned_encoded_development_train.csv", # path leads to  practise data
             val_dataset_path="data/practise_data/cleaned/cleaned_encoded_development_test.csv", # path leads to practise data
-            batch_size=default_config["batch_size"])
+            num_workers=hparams.num_workers,
+            batch_size=batch_size)
     else:
         dm = SpanishTweetsDataModule(train_dataset_path="data/full_data/cleaned/train_clean_encoded.csv",
                                      val_dataset_path="data/full_data/cleaned/val_clean_encoded.csv",
                                      num_workers=hparams.num_workers,
-                                     batch_size=default_config["batch_size"])
+                                     batch_size=batch_size)
         print("Using full train")
 
     wandb_logger = WandbLogger(project="spanish-tweets")
@@ -201,19 +204,20 @@ def main(hparams):
                         accelerator=hparams.accelerator,
                         devices=1,
                         logger=wandb_logger,
-                        max_epochs=hparams.epochs)
+                        max_epochs=epochs)
     trainer.fit(model, dm)
 
 
 if __name__ == '__main__':
     parser = ArgumentParser()
     parser.add_argument("--accelerator", "-a", default="cpu", help="Change to GPU if you have one (default: cpu)")
-    parser.add_argument("--batch-size", "-b", type=int, default=2, help="Batch size for training (default: 2)")
-    parser.add_argument("--num_workers", "-n", type=int, default=2, help="Number of workers for dataloader (default: 2)")
-    parser.add_argument("--epochs", "-e", type=int, default=3, help="Number of epochs to train (default: 3)")
+    parser.add_argument("--batch-size", "-b", type=int, help="Batch size for training (default: from yaml file)")
+    parser.add_argument("--num_workers", "-n", type=int, help="Number of workers for dataloader (default: 2)")
+    parser.add_argument("--epochs", "-e", type=int, help="Number of epochs to train (default: from yaml file)")
     parser.add_argument("--clf", "-c", type=str, default="simple", help="Classifier to use (default: simple)")
     parser.add_argument("--tiny_train", "-tiny", action="store_true", help="Use tiny train dataset (default: False)")
     parser.add_argument("--practise_train", "-practise", action="store_true", help="Use tiny train dataset (default: False)")
+
     args = parser.parse_args()
 
     main(args)
