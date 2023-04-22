@@ -33,3 +33,13 @@ Argument description:
 * -c: model architecture (simple for simple classifier)
 * -tiny: activates use of tiny dataset (for testing purposes)
 * -practise: activates use of practise dataset (subset of full dataset)
+
+If none of the arguments are specified, the script will run with the following default values:
+* -a: cpu
+* -b: from yaml file
+* -n: 2
+* -e: from yaml file
+* -c: simple
+* -tiny: deactivated
+* -practise: deactivated
+
