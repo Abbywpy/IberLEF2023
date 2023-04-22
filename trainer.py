@@ -12,7 +12,7 @@ import torchmetrics
 import lightning as L
 import lightning.pytorch as pl
 from pytorch_lightning.loggers import WandbLogger
-from lightning.pytorch.callbacks.early_stopping import EarlyStopping
+from lightning.pytorch.callbacks import EarlyStopping, ModelCheckpoint
 
 from models.lang_models.maria import MariaRoberta
 from models.lang_models.politibeto import PolitiBeto
@@ -196,7 +196,8 @@ def main(hparams):
 
     wandb_logger = WandbLogger(project="spanish-tweets")
     
-    trainer = L.Trainer(callbacks=[EarlyStopping(monitor="valid_average_f1", mode="max", patience=3)],
+    trainer = L.Trainer(callbacks=[EarlyStopping(monitor="valid_average_f1", mode="max", patience=3),
+                                   ModelCheckpoint(monitor="valid_average_f1", mode="max", save_top_k=3, save_last=False, verbose=True)],
                         accelerator=hparams.accelerator,
                         devices=1,
                         logger=wandb_logger,
