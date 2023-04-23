@@ -165,14 +165,16 @@ def main(hparams):
             # TODO: after hparam search remove this model and uncomment the model, epochs and batch_size below
             #model = SpanishTweetsCLF(clf="simple", freeze_lang_model=True, lr=1e-3, dropout_rate=0.2, hidden_size=128, num_layers=2, bias=False)
 
-            
-            model = SpanishTweetsCLF(clf="simple",
-                                     freeze_lang_model=True,
-                                     lr=default_config["learning_rate"],
-                                     dropout_rate=default_config["dropout"],
-                                     hidden_size=default_config["hidden_size"],
-                                     num_layers=default_config["num_layers"],
-                                     bias=False)
+            if hparams.path_to_checkpoint:
+                model = SpanishTweetsCLF.load_from_checkpoint(hparams.path_to_checkpoint)
+            else:
+                model = SpanishTweetsCLF(clf="simple",
+                                         freeze_lang_model=True,
+                                         lr=default_config["learning_rate"],
+                                         dropout_rate=default_config["dropout"],
+                                         hidden_size=default_config["hidden_size"],
+                                         num_layers=default_config["num_layers"],
+                                         bias=False)
 
     else:
         raise NotImplementedError
@@ -184,12 +186,14 @@ def main(hparams):
             num_workers=hparams.num_workers,
             batch_size=batch_size)
         print("Using tiny train")
+
     elif hparams.practise_train:
         dm = SpanishTweetsDataModule(
             train_dataset_path="data/practise_data/cleaned/cleaned_encoded_development_train.csv", # path leads to  practise data
             val_dataset_path="data/practise_data/cleaned/cleaned_encoded_development_test.csv", # path leads to practise data
             num_workers=hparams.num_workers,
             batch_size=batch_size)
+
     else:
         dm = SpanishTweetsDataModule(train_dataset_path="data/full_data/cleaned/train_clean_encoded.csv",
                                      val_dataset_path="data/full_data/cleaned/val_clean_encoded.csv",
@@ -198,13 +202,23 @@ def main(hparams):
         print("Using full train")
 
     wandb_logger = WandbLogger(project="spanish-tweets")
-    
-    trainer = L.Trainer(callbacks=[EarlyStopping(monitor="valid_average_f1", mode="max", patience=3),
-                                   ModelCheckpoint(monitor="valid_average_f1", mode="max", save_top_k=3, save_last=False, verbose=True)],
-                        accelerator=hparams.accelerator,
-                        devices=1,
-                        logger=wandb_logger,
-                        max_epochs=epochs)
+    if hparams.path_to_checkpoint:
+        trainer = L.Trainer(resume_from_checkpoint=hparams.path_to_checkpoint,
+                            callbacks=[EarlyStopping(monitor="valid_average_f1", mode="max", patience=3),
+                                       ModelCheckpoint(monitor="valid_average_f1", mode="max", save_top_k=3,
+                                                       save_last=False, verbose=True)],
+                            accelerator=hparams.accelerator,
+                            devices=1,
+                            logger=wandb_logger,
+                            max_epochs=epochs)
+
+    else:
+        trainer = L.Trainer(callbacks=[EarlyStopping(monitor="valid_average_f1", mode="max", patience=3),
+                                       ModelCheckpoint(monitor="valid_average_f1", mode="max", save_top_k=3, save_last=False, verbose=True)],
+                            accelerator=hparams.accelerator,
+                            devices=1,
+                            logger=wandb_logger,
+                            max_epochs=epochs)
     trainer.fit(model, dm)
 
 
@@ -217,6 +231,7 @@ if __name__ == '__main__':
     parser.add_argument("--clf", "-c", type=str, default="simple", help="Classifier to use (default: simple)")
     parser.add_argument("--tiny_train", "-tiny", action="store_true", help="Use tiny train dataset (default: False)")
     parser.add_argument("--practise_train", "-practise", action="store_true", help="Use tiny train dataset (default: False)")
+    parser.add_argument("--path_to_checkpoint", "-cp", help="Path to checkpoint to load (default: None)")
 
     args = parser.parse_args()
 
