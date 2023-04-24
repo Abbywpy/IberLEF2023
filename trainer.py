@@ -35,7 +35,7 @@ pl.seed_everything(42, workers=True)  # for reproducibility
 
 
 class SpanishTweetsCLF(pl.LightningModule):
-    def __init__(self, freeze_lang_model=True, clf="simple", bias=False, dropout_rate=0.15, hidden_size=256, num_layers=2, lr=1e-3):
+    def __init__(self, freeze_lang_model=True, clf="simple", bias=False, dropout_rate=0.15, hidden_size, num_layers=2, lr=1e-3):
         super().__init__()
 
         self.attr = ['ideology_multiclass']
