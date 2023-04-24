@@ -9,17 +9,17 @@ def objective(trial: optuna.trial.Trial) -> float:
     # search space for hyperparameters
     lr = trial.suggest_categorical("learning_rate", [1e-3, 2e-5, 3e-5])
     dropout = trial.suggest_float("dropout", 0.1, 0.2, step=0.05)
-    epochs = trial.suggest_int("epochs", 5, 10, step=1)
+    epochs = trial.suggest_int("epochs", 5, 20, step=1)
     hidden_size = trial.suggest_int("hidden_size", 128, 768, step=128)
     num_layers = trial.suggest_int("num_layers", 1, 2, step=1)
-    batch_size = trial.suggest_int("batch_size", 16, 62, step=16)
+    #batch_size = trial.suggest_int("batch_size", 16, 62, step=16)
 
     model = SpanishTweetsCLF(clf="simple", freeze_lang_model=True, lr=lr, dropout_rate=dropout, hidden_size=hidden_size, num_layers=num_layers, bias=False)
 
     dm = SpanishTweetsDataModule(
             train_dataset_path="data/hp_data/hp_cleaned_encoded_train.csv", # path leads to subset of full data especially created for hp search
             val_dataset_path="data/hp_data/hp_cleaned_encoded_development.csv", # path leads to subset of full data especially created for hp search
-            batch_size=2,
+            batch_size=8,
             num_workers=8)
 
     # Create the Trainer
@@ -39,12 +39,26 @@ def objective(trial: optuna.trial.Trial) -> float:
 
 
 if __name__ == "__main__":
-    study = optuna.create_study(direction="maximize", study_name="SpanishTweetsCLF", load_if_exists=True)
+    study = optuna.create_study(direction="maximize", study_name="SpanishTweetsCLF_ideology_mult", load_if_exists=True)
     study.optimize(objective, n_trials=10)
 
     print("Number of finished trials: ", len(study.trials))
     print("Best trial:")
     trial = study.best_trial
+    trials = study.get_trials()
+
+    with open("trial_results.txt", "w") as file:
+        for trial in trials:
+            trial_number = trial.number
+            trial_value = trial.value
+            trial_params = trial.params
+
+            file.write(f"Trial Number: {trial_number}\n")
+            file.write(f"Trial Value: {trial_value}\n")
+            file.write("Trial Parameters:\n")
+            for param_name, param_value in trial_params.items():
+                file.write(f"  {param_name}: {param_value}\n")
+            file.write("\n")
 
     print("  Value: ", trial.value)
     print("  Params: ")
