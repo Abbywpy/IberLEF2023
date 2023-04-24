@@ -167,9 +167,6 @@ def main(hparams):
             batch_size = hparams.batch_size if hparams.batch_size else default_config["batch_size"]
             epochs = hparams.epochs if hparams.epochs else default_config["epochs"]
 
-            # TODO: after hparam search remove this model and uncomment the model, epochs and batch_size below
-            #model = SpanishTweetsCLF(clf="simple", freeze_lang_model=True, lr=1e-3, dropout_rate=0.2, hidden_size=128, num_layers=2, bias=False)
-
             if hparams.path_to_checkpoint:
                 model = SpanishTweetsCLF.load_from_checkpoint(hparams.path_to_checkpoint)
             else:
