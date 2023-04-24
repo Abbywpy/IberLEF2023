@@ -38,9 +38,8 @@ class SpanishTweetsCLF(pl.LightningModule):
     def __init__(self, freeze_lang_model=True, clf="simple", bias=False, dropout_rate=0.15, hidden_size=256, num_layers=2, lr=1e-3):
         super().__init__()
 
-        self.attr = ['gender', 'profession',
-                     'ideology_binary', 'ideology_multiclass']
-        self.attr_size = [2, 3, 2, 4]
+        self.attr = ['ideology_multiclass']
+        self.attr_size = [4]
 
         self.MariaRoberta = MariaRoberta()
         self.PolitiBeto = PolitiBeto()
@@ -106,12 +105,15 @@ class SpanishTweetsCLF(pl.LightningModule):
             recall = self.metrics[f"{attr}_recall"](ret[f"pred_{attr}"], ret[attr])
             f1 = self.metrics[f"{attr}_f1"](ret[f"pred_{attr}"], ret[attr])
 
+            final_metric = (f1 * precision * recall) / 3
+
             self.log(f"train_{attr}_loss", attr_loss)
             self.log(f"train_{attr}_acc", accuracy(
                 ret[f"pred_{attr}"], ret[attr]))
             self.log(f"train_{attr}_precision", precision)
             self.log(f"train_{attr}_recall", recall)
             self.log(f"train_{attr}_f1", f1)
+            self.log(f"train_{attr}_final_metric", final_metric)
 
         return loss
 
@@ -135,12 +137,15 @@ class SpanishTweetsCLF(pl.LightningModule):
             precision = self.metrics[f"{attr}_precision"](ret[f"pred_{attr}"], ret[attr])
             recall = self.metrics[f"{attr}_recall"](ret[f"pred_{attr}"], ret[attr])
             f1 = self.metrics[f"{attr}_f1"](ret[f"pred_{attr}"], ret[attr])
-            
+
+            final_metric = (f1 * precision * recall) / 3
+
             self.log(f"valid_{attr}_loss", attr_loss)
             self.log(f"valid_{attr}_acc", accuracy(ret[f"pred_{attr}"], ret[attr]))
             self.log(f"valid_{attr}_precision", precision)
             self.log(f"valid_{attr}_recall", recall)
             self.log(f"valid_{attr}_f1", f1)
+            self.log(f"train_{attr}_final_metric", final_metric)
 
             total_f1 += f1
 
