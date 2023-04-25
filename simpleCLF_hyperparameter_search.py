@@ -67,10 +67,10 @@ if __name__ == "__main__":
     
     best_hyperparams = trial.params
     
-    with open("best_hyperparams_simpleCLF.yaml", "w") as f:
+    with open("best_hyperparams_ideology_multi.yaml", "w") as f:
         yaml.dump(best_hyperparams, f)
         
-        print(f"The best hyperparameters are saved in 'best_hyperparams_simpleCLF.yaml'." )
+        print(f"The best hyperparameters are saved in 'best_hyperparams_ideology_multi.yaml'." )
     
     
     
