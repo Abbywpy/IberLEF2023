@@ -44,7 +44,6 @@ if __name__ == "__main__":
 
     print("Number of finished trials: ", len(study.trials))
     print("Best trial:")
-    trial = study.best_trial
     trials = study.get_trials()
 
     with open("trial_results.txt", "w") as file:
@@ -60,11 +59,12 @@ if __name__ == "__main__":
                 file.write(f"  {param_name}: {param_value}\n")
             file.write("\n")
 
+    trial = study.best_trial
     print("  Value: ", trial.value)
     print("  Params: ")
     for key, value in trial.params.items():
         print("    {}: {}".format(key, value))
-    
+
     best_hyperparams = trial.params
     
     with open("best_hyperparams_ideology_multi.yaml", "w") as f:
