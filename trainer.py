@@ -35,7 +35,7 @@ pl.seed_everything(42, workers=True)  # for reproducibility
 
 
 class SpanishTweetsCLF(pl.LightningModule):
-    def __init__(self, hidden_size,  freeze_lang_model=True, clf="simple", bias=False, dropout_rate=0.15, num_layers=2, lr=1e-3):
+    def __init__(self, hidden_size, dropout_rate, num_layers, lr, freeze_lang_model=True, clf="simple", bias=False):
         super().__init__()
 
         self.attr = ['ideology_multiclass']
@@ -155,7 +155,7 @@ class SpanishTweetsCLF(pl.LightningModule):
         return loss
 
     def configure_optimizers(self):
-        optimizer = torch.optim.Adam(self.parameters(), lr=self.lr)
+        optimizer = torch.optim.Adam(self.parameters(), lr=2e-05)
         return optimizer
 
 
