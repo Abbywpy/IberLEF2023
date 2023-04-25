@@ -161,7 +161,7 @@ class SpanishTweetsCLF(pl.LightningModule):
 
 def main(hparams):
     if hparams.clf == "simple":
-        with open('best_hyperparams_simpleCLF.yaml') as f:
+        with open('best_hyperparams_ideology_multi.yaml') as f:
             default_config = yaml.load(f, Loader=yaml.FullLoader)
 
             batch_size = hparams.batch_size if hparams.batch_size else default_config["batch_size"]
