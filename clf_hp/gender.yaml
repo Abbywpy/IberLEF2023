@@ -1,5 +1,8 @@
 dropout: 0.15000000000000002
 epochs: 14
 hidden_size: 256
-learning_rate: 2.0e-05
 num_layers: 2
+output_size: 2
+class_name:
+  - female
+  - male

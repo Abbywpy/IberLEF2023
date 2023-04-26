@@ -20,42 +20,63 @@ from models.lang_models.xlmt import TwitterXLM
 from models.clfs.simpleCLF import SimpleCLF
 
 from dataloader import SpanishTweetsDataModule
-
 from models.utils import concat_embeds
 from loss import cross_entropy_loss, accuracy
+from utils import DictAsMember
 
-from loguru import logger
-
-import os
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
-DEVICE = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
+DEVICE = torch.device(
+    "cuda:0") if torch.cuda.is_available() else torch.device("cpu")
+
+CLF_DICT = {"simple": [
+    'gender',
+    'profession',
+    'ideology_binary',
+    'ideology_multiclass'],
+    "mlcl": ["mlcl"]
+}
 
 pl.seed_everything(42, workers=True)  # for reproducibility
 
 
 class SpanishTweetsCLF(pl.LightningModule):
-    def __init__(self, hidden_size,  freeze_lang_model=True, clf="simple", bias=False, dropout_rate=0.15, num_layers=2, lr=1e-3):
+    def __init__(self, freeze_lang_model=True, clf_type="simple", hp_path="./clf_hp", bias=False, lr=2.0e-5):
         super().__init__()
-
-        self.attr = ['ideology_multiclass']
-        self.attr_size = [4]
 
         self.MariaRoberta = MariaRoberta()
         self.PolitiBeto = PolitiBeto()
         self.TwitterXLM = TwitterXLM()
-        
-        self.metrics = {}
-        for attr in self.attr:
-            self.metrics[f"{attr}_precision"] = torchmetrics.Precision(num_classes=self.attr_size[self.attr.index(attr)], average='macro', task="multiclass").to(DEVICE)
-            self.metrics[f"{attr}_recall"] = torchmetrics.Recall(num_classes=self.attr_size[self.attr.index(attr)], average='macro', task="multiclass").to(DEVICE)
-            self.metrics[f"{attr}_f1"] = torchmetrics.classification.MulticlassF1Score(num_classes=self.attr_size[self.attr.index(attr)], average='macro', task="multiclass").to(DEVICE)
+        # classifiers
+        self.clf_type = clf_type
+        self.clf_attr = CLF_DICT[clf_type]
+        self.lr = lr
 
         # TODO: finetune SimpleCLF classifier
-        if clf == "simple":
-            for attr, s in zip(self.attr, self.attr_size):
+        if clf_type == "simple":
+            logger.info("running simple classifier")
+
+            for attr in self.clf_attr:
+                attr_hp_path = os.path.join(hp_path, f"{attr}.yaml")
+
+                with open(attr_hp_path) as f:
+                    attr_hp = DictAsMember(yaml.safe_load(f))
+                    logger.info(attr_hp)
+                    setattr(self, f"{attr}_hp", attr_hp)
+                setattr(self, f"{attr}_precision", torchmetrics.Precision(
+                    num_classes=attr_hp.output_size, average='macro', task="multiclass").to(DEVICE))
+                setattr(self, f"{attr}_recall", torchmetrics.Recall(
+                    num_classes=attr_hp.output_size, average='macro', task="multiclass").to(DEVICE))
+                setattr(self, f"{attr}_f1", torchmetrics.classification.MulticlassF1Score(
+                    num_classes=attr_hp.output_size, average='macro', task="multiclass").to(DEVICE))
+
                 setattr(self, f"clf_{attr}", SimpleCLF(
-                    attr_name=attr, output_size=s, bias=bias, dropout_rate=dropout_rate, hidden_size=hidden_size, num_layers=num_layers))
+                    attr_name=attr,
+                    output_size=attr_hp.output_size,
+                    bias=bias,
+                    dropout_rate=attr_hp.dropout,
+                    hidden_size=attr_hp.hidden_size,
+                    num_layers=attr_hp.num_layers))
 
         # TODO: add cl classifier and config file for it
         else:
@@ -161,22 +182,10 @@ class SpanishTweetsCLF(pl.LightningModule):
 
 def main(hparams):
     if hparams.clf == "simple":
-        with open('best_hyperparams_ideology_multi.yaml') as f:
-            default_config = yaml.load(f, Loader=yaml.FullLoader)
-
-            batch_size = hparams.batch_size if hparams.batch_size else default_config["batch_size"]
-            epochs = hparams.epochs if hparams.epochs else default_config["epochs"]
-
-            if hparams.path_to_checkpoint:
-                model = SpanishTweetsCLF.load_from_checkpoint(hparams.path_to_checkpoint)
-            else:
-                model = SpanishTweetsCLF(clf="simple",
-                                         freeze_lang_model=True,
-                                         lr=default_config["learning_rate"],
-                                         dropout_rate=default_config["dropout"],
-                                         hidden_size=default_config["hidden_size"],
-                                         num_layers=default_config["num_layers"],
-                                         bias=False)
+        model = SpanishTweetsCLF(clf_type="simple",
+                                 freeze_lang_model=True,
+                                 lr=hparams.learning_rate,
+                                 bias=False)
 
     else:
         raise NotImplementedError

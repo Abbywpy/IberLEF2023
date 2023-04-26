@@ -1,5 +1,9 @@
 dropout: 0.2
 epochs: 10
 hidden_size: 512
-learning_rate: 2.0e-05
 num_layers: 3
+output_size: 3
+class_name:
+  - celebrity
+  - journalist
+  - politician
