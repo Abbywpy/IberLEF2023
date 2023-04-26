@@ -226,14 +226,30 @@ def main(hparams):
 
 if __name__ == '__main__':
     parser = ArgumentParser()
-    parser.add_argument("--accelerator", "-a", default="cpu", help="Change to GPU if you have one (default: cpu)")
-    parser.add_argument("--batch-size", "-b", type=int, help="Batch size for training (default: from yaml file)")
-    parser.add_argument("--num_workers", "-n", type=int, help="Number of workers for dataloader (default: 2)")
-    parser.add_argument("--epochs", "-e", type=int, help="Number of epochs to train (default: from yaml file)")
-    parser.add_argument("--clf", "-c", type=str, default="simple", help="Classifier to use (default: simple)")
-    parser.add_argument("--tiny_train", "-tiny", action="store_true", help="Use tiny train dataset (default: False)")
-    parser.add_argument("--practise_train", "-practise", action="store_true", help="Use tiny train dataset (default: False)")
-    parser.add_argument("--path_to_checkpoint", "-cp", help="Path to checkpoint to load (default: None)")
+    parser.add_argument("--accelerator", "-a", default="cpu",
+                        help="Change to GPU if you have one (default: cpu)")
+    parser.add_argument("--batch-size", "-b", default=8, type=int,
+                        help="Batch size for training (default: from yaml file)")
+    parser.add_argument("--num_workers", "-w", type=int,
+                        help="Number of workers for dataloader (default: 2)")
+    parser.add_argument("--epochs", "-e", default=15, type=int,
+                        help="Number of epochs to train (default: from yaml file)")
+    parser.add_argument("--learning-rate", "-lr",
+                        default=2.0e-5, type=float, help="learning-rate")
+
+    parser.add_argument("--run-name", "-n", default=None,
+                        type=str, help="learning-rate")
+
+    parser.add_argument("--clf", "-c", type=str, default="simple",
+                        help="Classifier to use (default: simple)")
+    parser.add_argument("--hp_path", "-hp", type=str,
+                        default="./clf_hp", help="hp files for classifiers")
+    parser.add_argument("--tiny_train", "-tiny", action="store_true",
+                        help="Use tiny train dataset (default: False)")
+    parser.add_argument("--practise_train", "-practise", action="store_true",
+                        help="Use tiny train dataset (default: False)")
+    parser.add_argument("--path_to_checkpoint", "-cp",
+                        help="Path to checkpoint to load (default: None)")
 
     args = parser.parse_args()
 

@@ -22,17 +22,21 @@ nvcc --version
 Then, to run the training script on a tiny dataset with the following command (Omit the ```tiny``` argument to use the full dataset):
 
 ```bash
-python trainer.py -a 'cpu' -b 2 -n 2 -e 3 -c 'simple' -tiny 
+python trainer.py -a 'cpu' -b 2 -w 2 -e 3 -c 'simple' -n "test_logger" -tiny 
 ```
 
 Argument description:
 * -a: accelerator (cpu or gpu)
 * -b: batch size
-* -n: number of workers
+* -w: number of workers
 * -e: number of epochs
 * -c: model architecture (simple for simple classifier)
 * -tiny: activates use of tiny dataset (for testing purposes)
 * -practise: activates use of practise dataset (subset of full dataset)
+* -lr
+* -n
+* -hp_path
+
 
 If none of the arguments are specified, the script will run with the following default values:
 * -a: cpu
