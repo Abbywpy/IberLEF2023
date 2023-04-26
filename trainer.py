@@ -189,48 +189,39 @@ def main(hparams):
 
     else:
         raise NotImplementedError
-    
+
     if hparams.tiny_train:
-        dm = SpanishTweetsDataModule(
-            train_dataset_path="data/tiny_data/tiny_cleaned_encoded_train.csv", # path leads to *very* small subset of practise data
-            val_dataset_path="data/tiny_data/tiny_cleaned_encoded_development.csv", # path leads to *very* small subset of practise data
-            num_workers=hparams.num_workers,
-            batch_size=batch_size)
-        print("Using tiny train")
+        # path leads to *very* small subset of practise data
+        train_dataset_path = "data/tiny_data/tiny_cleaned_encoded_train.csv"
+        val_dataset_path = "data/tiny_data/tiny_cleaned_encoded_development.csv"
+        logger.info("Using tiny train")
 
     elif hparams.practise_train:
-        dm = SpanishTweetsDataModule(
-            train_dataset_path="data/practise_data/cleaned/cleaned_encoded_development_train.csv", # path leads to  practise data
-            val_dataset_path="data/practise_data/cleaned/cleaned_encoded_development_test.csv", # path leads to practise data
-            num_workers=hparams.num_workers,
-            batch_size=batch_size)
-
+        # path leads to practise data
+        train_dataset_path = "data/practise_data/cleaned/cleaned_encoded_development_train.csv"
+        val_dataset_path = "data/practise_data/cleaned/cleaned_encoded_development_test.csv"
+        logger.info("Using practise train")
     else:
-        dm = SpanishTweetsDataModule(train_dataset_path="data/full_data/cleaned/train_clean_encoded.csv",
-                                     val_dataset_path="data/full_data/cleaned/val_clean_encoded.csv",
-                                     num_workers=hparams.num_workers,
-                                     batch_size=batch_size)
-        print("Using full train")
+        train_dataset_path = "data/full_data/cleaned/train_clean_encoded.csv"
+        val_dataset_path = "data/full_data/cleaned/val_clean_encoded.csv"
+        logger.info("Using full train")
 
-    wandb_logger = WandbLogger(project="spanish-tweets")
-    if hparams.path_to_checkpoint:
-        trainer = L.Trainer(resume_from_checkpoint=hparams.path_to_checkpoint,
-                            callbacks=[EarlyStopping(monitor="valid_average_f1", mode="max", patience=3),
-                                       ModelCheckpoint(monitor="valid_average_f1", mode="max", save_top_k=3,
-                                                       save_last=False, verbose=True)],
-                            accelerator=hparams.accelerator,
-                            devices=1,
-                            logger=wandb_logger,
-                            max_epochs=epochs)
+    dm = SpanishTweetsDataModule(train_dataset_path,
+                                 val_dataset_path,
+                                 num_workers=hparams.num_workers,
+                                 batch_size=hparams.batch_size)
+    wandb_logger = WandbLogger(project="spanish-tweets", name=hparams.run_name)
 
-    else:
-        trainer = L.Trainer(callbacks=[EarlyStopping(monitor="valid_average_f1", mode="max", patience=3),
-                                       ModelCheckpoint(monitor="valid_average_f1", mode="max", save_top_k=3, save_last=False, verbose=True)],
-                            accelerator=hparams.accelerator,
-                            devices=1,
-                            logger=wandb_logger,
-                            max_epochs=epochs)
-    trainer.fit(model, dm)
+    trainer = L.Trainer(callbacks=[
+                        EarlyStopping(monitor="valid/average_f1",
+                                      mode="max", patience=3),
+                        ModelCheckpoint(monitor="valid/average_f1", mode="max", save_top_k=3, save_last=False, verbose=True)],
+                        accelerator=hparams.accelerator,
+                        devices=1,
+                        logger=wandb_logger,
+                        max_epochs=hparams.epochs)
+
+    trainer.fit(model, dm, ckpt_path=hparams.path_to_checkpoint)
 
 
 if __name__ == '__main__':
