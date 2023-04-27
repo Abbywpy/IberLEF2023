@@ -38,8 +38,8 @@ class SpanishTweetsCLF(pl.LightningModule):
     def __init__(self, hidden_size, dropout_rate, num_layers, lr, freeze_lang_model=True, clf="simple", bias=False):
         super().__init__()
 
-        self.attr = ['ideology_multiclass']
-        self.attr_size = [4]
+        self.attr = ['profession']
+        self.attr_size = [3]
 
         self.MariaRoberta = MariaRoberta()
         self.PolitiBeto = PolitiBeto()
