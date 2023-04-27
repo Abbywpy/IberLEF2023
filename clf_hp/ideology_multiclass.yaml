@@ -2,6 +2,7 @@ dropout: 0.15000000000000002
 epochs: 14
 hidden_size: 512
 num_layers: 3
+learning_rate: 2.0e-05
 output_size: 4
 class_name:
   - left
