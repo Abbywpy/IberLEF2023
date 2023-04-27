@@ -1,0 +1,90 @@
+Trial Number: 0
+Trial Value: 0.3615553677082062
+Trial Parameters:
+  learning_rate: 2e-05
+  dropout: 0.2
+  epochs: 15
+  hidden_size: 512
+  num_layers: 1
+
+Trial Number: 1
+Trial Value: 0.3728478252887726
+Trial Parameters:
+  learning_rate: 2e-05
+  dropout: 0.2
+  epochs: 7
+  hidden_size: 256
+  num_layers: 2
+
+Trial Number: 2
+Trial Value: 0.36738982796669006
+Trial Parameters:
+  learning_rate: 0.001
+  dropout: 0.15000000000000002
+  epochs: 19
+  hidden_size: 512
+  num_layers: 2
+
+Trial Number: 3
+Trial Value: 0.36523258686065674
+Trial Parameters:
+  learning_rate: 2e-05
+  dropout: 0.1
+  epochs: 16
+  hidden_size: 256
+  num_layers: 1
+
+Trial Number: 4
+Trial Value: 0.360991507768631
+Trial Parameters:
+  learning_rate: 0.001
+  dropout: 0.1
+  epochs: 5
+  hidden_size: 768
+  num_layers: 1
+
+Trial Number: 5
+Trial Value: 0.3672617971897125
+Trial Parameters:
+  learning_rate: 3e-05
+  dropout: 0.15000000000000002
+  epochs: 15
+  hidden_size: 512
+  num_layers: 1
+
+Trial Number: 6
+Trial Value: 0.3666270077228546
+Trial Parameters:
+  learning_rate: 3e-05
+  dropout: 0.15000000000000002
+  epochs: 18
+  hidden_size: 768
+  num_layers: 1
+
+Trial Number: 7
+Trial Value: 0.3708215653896332
+Trial Parameters:
+  learning_rate: 2e-05
+  dropout: 0.2
+  epochs: 11
+  hidden_size: 128
+  num_layers: 1
+
+Trial Number: 8
+Trial Value: 0.3665947914123535
+Trial Parameters:
+  learning_rate: 0.001
+  dropout: 0.15000000000000002
+  epochs: 5
+  hidden_size: 768
+  num_layers: 1
+
+Trial Number: 9
+Trial Value: 0.36492255330085754
+Trial Parameters:
+  learning_rate: 3e-05
+  dropout: 0.2
+  epochs: 12
+  hidden_size: 768
+  num_layers: 1
+
