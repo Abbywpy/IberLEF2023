@@ -1,3 +1,7 @@
+
+# Note that the hyperparameter search was conducted on the ideology_multi branch of the repository for each classification task individually
+
+
 import optuna
 import torch
 import lightning as L
