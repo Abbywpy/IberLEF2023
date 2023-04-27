@@ -39,14 +39,14 @@ def objective(trial: optuna.trial.Trial) -> float:
 
 
 if __name__ == "__main__":
-    study = optuna.create_study(direction="maximize", study_name="SpanishTweetsCLF_profession", load_if_exists=True)
+    study = optuna.create_study(direction="maximize", study_name="SpanishTweetsCLF_gender", load_if_exists=True)
     study.optimize(objective, n_trials=10)
 
     print("Number of finished trials: ", len(study.trials))
     print("Best trial:")
     trials = study.get_trials()
 
-    with open("prof_trial_results.txt", "w") as file:
+    with open("gender_trial_results.txt", "w") as file:
         for trial in trials:
             trial_number = trial.number
             trial_value = trial.value
@@ -67,10 +67,10 @@ if __name__ == "__main__":
 
     best_hyperparams = trial.params
     
-    with open("best_hyperparams_profession.yaml", "w") as f:
+    with open("best_hyperparams_gender.yaml", "w") as f:
         yaml.dump(best_hyperparams, f)
         
-        print(f"The best hyperparameters are saved in 'best_hyperparams_profession.yaml'." )
+        print(f"The best hyperparameters are saved in 'best_hyperparams_gender.yaml'." )
     
     
     
