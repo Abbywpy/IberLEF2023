@@ -10,7 +10,7 @@ def objective(trial: optuna.trial.Trial) -> float:
     lr = trial.suggest_categorical("learning_rate", [1e-3, 2e-5, 3e-5])
     dropout = trial.suggest_float("dropout", 0.1, 0.2, step=0.05)
     epochs = trial.suggest_int("epochs", 5, 20, step=1)
-    hidden_size = trial.suggest_int("hidden_size", 128, 768, step=128)
+    hidden_size = trial.suggest_categorical("hidden_size", [128, 256, 512, 768])
     num_layers = trial.suggest_int("num_layers", 1, 2, step=1)
     #batch_size = trial.suggest_int("batch_size", 16, 62, step=16)
 
@@ -39,14 +39,14 @@ def objective(trial: optuna.trial.Trial) -> float:
 
 
 if __name__ == "__main__":
-    study = optuna.create_study(direction="maximize", study_name="SpanishTweetsCLF_ideology_mult", load_if_exists=True)
+    study = optuna.create_study(direction="maximize", study_name="SpanishTweetsCLF_profession", load_if_exists=True)
     study.optimize(objective, n_trials=10)
 
     print("Number of finished trials: ", len(study.trials))
     print("Best trial:")
     trials = study.get_trials()
 
-    with open("trial_results.txt", "w") as file:
+    with open("prof_trial_results.txt", "w") as file:
         for trial in trials:
             trial_number = trial.number
             trial_value = trial.value
@@ -67,10 +67,10 @@ if __name__ == "__main__":
 
     best_hyperparams = trial.params
     
-    with open("best_hyperparams_ideology_multi.yaml", "w") as f:
+    with open("best_hyperparams_profession.yaml", "w") as f:
         yaml.dump(best_hyperparams, f)
         
-        print(f"The best hyperparameters are saved in 'best_hyperparams_ideology_multi.yaml'." )
+        print(f"The best hyperparameters are saved in 'best_hyperparams_profession.yaml'." )
     
     
     
