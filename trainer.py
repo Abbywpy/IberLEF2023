@@ -157,6 +157,7 @@ class SpanishTweetsCLF(pl.LightningModule):
 
         loss = 0
         total_f1 = 0
+        total_final_metric = 0
         wandb_logger = {}
         for attr in self.clf_attr:
             ret.update(getattr(self, f'clf_{attr}')(**ret))
@@ -171,6 +172,7 @@ class SpanishTweetsCLF(pl.LightningModule):
                 ret[f"pred_{attr}"], ret[attr])
             f1 = getattr(self, f'{attr}_f1')(ret[f"pred_{attr}"], ret[attr])
             final_metric = (f1 * precision * recall) / 3
+            total_final_metric += final_metric
             total_f1 += f1
 
             
@@ -191,6 +193,9 @@ class SpanishTweetsCLF(pl.LightningModule):
         average_f1 = total_f1 / len(self.clf_attr)
         wandb_logger["valid/average_f1"] = average_f1
         self.log("valid/average_f1", average_f1)
+        avg_final_metric = total_final_metric / len(self.clf_attr)
+        wandb_logger["valid/average_final_metric"] = avg_final_metric
+        self.log("valid/average_final_metric", avg_final_metric)
         self.logger.experiment.log(wandb_logger)
 
         return loss
