@@ -10,7 +10,7 @@ def objective(trial: optuna.trial.Trial) -> float:
     lr = trial.suggest_categorical("learning_rate", [1e-3, 2e-5, 3e-5])
     dropout = trial.suggest_float("dropout", 0.1, 0.2, step=0.05)
     epochs = trial.suggest_int("epochs", 5, 20, step=1)
-    hidden_size = trial.suggest_int("hidden_size", 128, 768, step=128)
+    hidden_size = trial.suggest_categorical("hidden_size", [128, 256, 512, 768])
     num_layers = trial.suggest_int("num_layers", 1, 2, step=1)
     #batch_size = trial.suggest_int("batch_size", 16, 62, step=16)
 
