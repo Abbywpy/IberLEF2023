@@ -1,0 +1,5 @@
+dropout: 0.2
+epochs: 7
+hidden_size: 256
+learning_rate: 2.0e-05
+num_layers: 2
