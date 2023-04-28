@@ -183,6 +183,13 @@ class SpanishTweetsCLF(pl.LightningModule):
             wandb_logger[f"valid/{attr}/recall"] = recall
             wandb_logger[f"valid/{attr}/f1"] = f1
             wandb_logger[f"valid/{attr}/final_metric"] = final_metric
+            self.log(f"valid/{attr}/loss", attr_loss)
+            self.log(f"valid/{attr}/acc", accuracy(
+                ret[f"pred_{attr}"], ret[attr]))
+            self.log(f"valid/{attr}/precision", precision)
+            self.log(f"valid/{attr}/recall", recall)
+            self.log(f"valid/{attr}/f1", f1)
+            self.log(f"valid/{attr}/final_metric", final_metric)
             if self.global_step % 80 == 0:
                     cm = wandb.plot.confusion_matrix(
                         y_true=ret[attr].tolist(),
