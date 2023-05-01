@@ -54,7 +54,7 @@ class SpanishTweetsDataModule(L.LightningDataModule):
     def predict_dataloader(self):
         return data.DataLoader(
             self.test_dataset,
-            batch_size=8,
+            batch_size=80,
             num_workers=self.num_workers,
             shuffle=False,
         )
