@@ -5,6 +5,16 @@ from dataloader import SpanishTweetsDataModule
 from trainer import SpanishTweetsCLF
 import pandas as pd
 import lightning as L
+import argparse
+
+
+def create_argumentparser():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--model_checkpoint", "-cp", type=str, required=True, default="spanish_tweets2/r18a2167/checkpoints/epoch=19-valid/average_final_metric=0.02.ckpt")
+    parser.add_argument("--test_dataset_path", "-tdp", type=str, required=True, default="data/test_data/cleaned/cleaned_politicES_phase_2_test_public.csv")
+    parser.add_argument("--output_path", "-op", type=str, required=True, default="results.csv")
+
+    return parser
 
 
 def create_decoding_dict():
@@ -13,6 +23,7 @@ def create_decoding_dict():
     decoding_dict['profession'] = {0: 'celebrity', 1: 'journalist', 2: 'politician'}
     decoding_dict['ideology_binary'] = {0: 'left', 1: 'right'}
     decoding_dict['ideology_multiclass'] = {0: 'left', 1: 'moderate_left', 2: 'moderate_right', 3: 'right'}
+
     return decoding_dict
 
 
@@ -26,19 +37,22 @@ def decode_preds(predictions, decoding_dict, attrs):
             pred_counter = Counter(pred_idcs)  # count individual predictions for each tweet and trait
             most_common_pred = pred_counter.most_common(1)[0][0]  # get most common prediction
             attrs[f"{attr}"] += [decoding_dict[f"{attr}"][int(most_common_pred)] for _ in range(
-                len(pred_counter))]  # append to dicitionry as many times as there are tweets in batch
+                len(pred_counter))]  # append to dictionary as many times as there are tweets in batch
+
     return attrs
 
 
 def main():
-    model_checkpoint = "spanish_tweets2/r18a2167/checkpoints/epoch=19-valid/average_final_metric=0.02.ckpt"
-    loaded_model = SpanishTweetsCLF.load_from_checkpoint(model_checkpoint)
+    parser = create_argumentparser()
+    args = parser.parse_args()
+
+    loaded_model = SpanishTweetsCLF.load_from_checkpoint(args.model_checkpoint)
 
     trainer = L.Trainer(accelerator="cpu", devices=1)
 
     train_dataset_path = "data/full_data/cleaned/train_clean_encoded.csv"
     val_dataset_path = "data/full_data/cleaned/val_clean_encoded.csv"
-    test_dataset_path = "data/test_data/cleaned/cleaned_politicES_phase_2_test_public.csv"
+    test_dataset_path = args.clean_test_dataset_path
 
     dm = SpanishTweetsDataModule(train_dataset_path,
                                  val_dataset_path,
@@ -371,13 +385,11 @@ def main():
 
     decoding_dict = create_decoding_dict()
 
+    attrs = decode_preds(predictions, decoding_dict, attrs)
+
     results_df = pd.DataFrame(attrs)
 
-    df = pd.read_csv("data/test_data/cleaned/tiny.csv")
-
-    df_combined = df.fillna(results_df)
-
-    df_combined.to_csv("results_tiny.csv", index=False)
+    results_df.to_csv(args.output_path, index=False)
 
 
 if __name__ == "__main__":
