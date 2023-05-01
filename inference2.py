@@ -27,7 +27,8 @@ def create_decoding_dict():
     return decoding_dict
 
 
-def decode_preds(predictions, decoding_dict, attrs):
+def decode_preds(predictions, decoding_dict):
+    attrs = {'gender': [], 'profession': [], 'ideology_binary': [], 'ideology_multiclass': []}
     for i in range(len(predictions)):  # for each batch = cluster
         for j, attr in enumerate(list(attrs.keys())):  # for each attribute
             pred_idcs = []
@@ -39,13 +40,15 @@ def decode_preds(predictions, decoding_dict, attrs):
             attrs[f"{attr}"] += [decoding_dict[f"{attr}"][int(most_common_pred)] for _ in range(
                 len(pred_counter))]  # append to dictionary as many times as there are tweets in batch
 
+    attrs = handle_ideology_mismatch(attrs)
+
     return attrs
 
 
-def handle_ideology_mismatch():
-    if 'right' in attrs['ideology_binary'] and 'left' in attrs['ideology_binary']:
-        attrs['ideology_binary'] = ['right' if x == 'right' else 'left' for x in attrs['ideology_binary']]
-    pass
+def handle_ideology_mismatch(attrs):
+    attrs['ideology_multiclass'] = ['moderate_right' if 'right' in attrs['ideology_binary'] and "left" in attrs['ideology_multiclass'] else _ for _ in attrs['ideology_multiclass']]
+    attrs['ideology_multiclass'] = ['moderate_left' if 'left' in attrs['ideology_binary'] and "right" in attrs['ideology_multiclass'] else _ for _ in attrs['ideology_multiclass']]
+    return attrs
 
 
 def main():
@@ -391,7 +394,7 @@ def main():
 
     decoding_dict = create_decoding_dict()
 
-    attrs = decode_preds(predictions, decoding_dict, attrs)
+    attrs.update(decode_preds(predictions, decoding_dict))
 
     results_df = pd.DataFrame(attrs)
 
