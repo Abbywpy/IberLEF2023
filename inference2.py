@@ -42,6 +42,12 @@ def decode_preds(predictions, decoding_dict, attrs):
     return attrs
 
 
+def handle_ideology_mismatch():
+    if 'right' in attrs['ideology_binary'] and 'left' in attrs['ideology_binary']:
+        attrs['ideology_binary'] = ['right' if x == 'right' else 'left' for x in attrs['ideology_binary']]
+    pass
+
+
 def main():
     parser = create_argumentparser()
     args = parser.parse_args()
@@ -52,7 +58,7 @@ def main():
 
     train_dataset_path = "data/full_data/cleaned/train_clean_encoded.csv"
     val_dataset_path = "data/full_data/cleaned/val_clean_encoded.csv"
-    test_dataset_path = args.clean_test_dataset_path
+    test_dataset_path = args.test_dataset_path
 
     dm = SpanishTweetsDataModule(train_dataset_path,
                                  val_dataset_path,
@@ -389,7 +395,12 @@ def main():
 
     results_df = pd.DataFrame(attrs)
 
-    results_df.to_csv(args.output_path, index=False)
+    test_df = pd.read_csv(test_dataset_path)
+    labels = test_df[["label"]]
+
+    combined_df = pd.concat([labels, results_df], axis=1)
+
+    combined_df.to_csv(args.output_path, index=False)
 
 
 if __name__ == "__main__":
