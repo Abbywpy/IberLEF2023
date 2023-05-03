@@ -57,7 +57,7 @@ def main():
 
     loaded_model = SpanishTweetsCLF.load_from_checkpoint(args.model_checkpoint)
 
-    trainer = L.Trainer(accelerator="cpu", devices=1)
+    trainer = L.Trainer(accelerator="gpu", devices=1)
 
     train_dataset_path = "data/full_data/cleaned/train_clean_encoded.csv"
     val_dataset_path = "data/full_data/cleaned/val_clean_encoded.csv"
