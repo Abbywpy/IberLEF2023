@@ -55,7 +55,7 @@ class SpanishTweetsDataModule(L.LightningDataModule):
         return data.DataLoader(
             self.test_dataset,
             batch_size=80,
-            num_workers=self.num_workers,
+            num_workers=2,
             shuffle=False,
         )
 
