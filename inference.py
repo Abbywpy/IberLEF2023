@@ -12,7 +12,7 @@ def create_argumentparser():
     parser = argparse.ArgumentParser()
     parser.add_argument("--model_checkpoint", "-cp", type=str, required=True, default="spanish_tweets2/r18a2167/checkpoints/epoch=19-valid/average_final_metric=0.02.ckpt")
     parser.add_argument("--test_dataset_path", "-tdp", type=str, required=True, default="data/test_data/cleaned/cleaned_politicES_phase_2_test_public.csv")
-    parser.add_argument("--output_path", "-op", type=str, required=True, default="results.csv")
+    parser.add_argument("--output_path", "-op", type=str, required=True, default="results/results_full.csv")
 
     return parser
 
@@ -40,14 +40,6 @@ def decode_preds(predictions, decoding_dict):
             attrs[f"{attr}"] += [decoding_dict[f"{attr}"][int(most_common_pred)] for _ in range(
                 len(pred_counter))]  # append to dictionary as many times as there are tweets in batch
 
-    attrs = handle_ideology_mismatch(attrs)
-
-    return attrs
-
-
-def handle_ideology_mismatch(attrs):
-    attrs['ideology_multiclass'] = ['moderate_right' if 'right' in attrs['ideology_binary'] and "left" in attrs['ideology_multiclass'] else _ for _ in attrs['ideology_multiclass']]
-    attrs['ideology_multiclass'] = ['moderate_left' if 'left' in attrs['ideology_binary'] and "right" in attrs['ideology_multiclass'] else _ for _ in attrs['ideology_multiclass']]
     return attrs
 
 
