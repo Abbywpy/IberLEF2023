@@ -13,6 +13,7 @@ def create_argumentparser():
     parser.add_argument("--model_checkpoint", "-cp", type=str, required=True, default="spanish_tweets2/r18a2167/checkpoints/epoch=19-valid/average_final_metric=0.02.ckpt")
     parser.add_argument("--test_dataset_path", "-tdp", type=str, required=True, default="data/test_data/cleaned/cleaned_politicES_phase_2_test_public.csv")
     parser.add_argument("--output_path", "-op", type=str, required=True, default="results/results_full.csv")
+    parser.add_argument("--accelerator", "-a", type=str, required=True, default="cpu")
 
     return parser
 
@@ -74,7 +75,9 @@ def main():
 
     combined_df = pd.concat([labels, results_df], axis=1)
 
-    combined_df.to_csv(args.output_path, index=False)
+    combined_df_unique_for_cluster = combined_df.drop_duplicates()
+
+    combined_df_unique_for_cluster.to_csv(args.output_path, index=False)
 
 
 if __name__ == "__main__":
