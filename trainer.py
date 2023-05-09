@@ -215,7 +215,7 @@ class SpanishTweetsCLF(pl.LightningModule):
 def main(hparams):
     if hparams.clf == "simple":
         model = SpanishTweetsCLF(clf_type="simple",
-                                 freeze_lang_model=True,
+                                 freeze_lang_model=hparams.freeze,
                                  lr=hparams.learning_rate,
                                  bias=False)
 
@@ -285,6 +285,8 @@ if __name__ == '__main__':
                         help="Use tiny train dataset (default: False)")
     parser.add_argument("--path_to_checkpoint", "-cp",
                         help="Path to checkpoint to load (default: None)")
+    parser.add_argument("--freeze", action="store_true", default=True,
+                        type=bool, help="Freeze language model (default: True)")
 
     args = parser.parse_args()
 
