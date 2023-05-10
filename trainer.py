@@ -244,11 +244,7 @@ def main(hparams):
 
     trainer = L.Trainer(callbacks=[
                         EarlyStopping(monitor="valid/average_final_metric", mode="max", patience=3),
-                        ModelCheckpoint(monitor="valid/average_final_metric", mode="max", save_top_k=3, save_last=False, verbose=True, filename="{epoch}-{valid/average_final_metric:.2f}"),
-                        ModelCheckpoint(monitor="valid/profession/final_metric", mode="max", save_top_k=1, save_last=False, verbose=True, filename="{epoch}-{valid/profession/final_metric:.2f}"),
-                        ModelCheckpoint(monitor="valid/gender/final_metric", mode="max", save_top_k=1, save_last=False, verbose=True, filename="{epoch}-{valid/gender/final_metric:.2f}"),
-                        ModelCheckpoint(monitor="valid/ideology_multiclass/final_metric", mode="max", save_top_k=1, save_last=False, verbose=True, filename="{epoch}-{valid/ideology_multiclass/final_metric:.2f}"),
-                        ModelCheckpoint(monitor="valid/ideology_binary/final_metric", mode="max", save_top_k=1, save_last=False, verbose=True, filename="{epoch}-{valid/ideology_binary/final_metric:.2f}"),],
+                        ModelCheckpoint(monitor="valid/average_final_metric", mode="max", save_top_k=3, save_last=False, verbose=True, filename="{epoch}-{valid/average_final_metric:.2f}"),],
                         accelerator=hparams.accelerator,
                         devices=1,
                         logger=wandb_logger,
