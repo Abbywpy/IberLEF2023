@@ -232,7 +232,7 @@ def main(hparams):
         val_dataset_path = "data/practise_data/cleaned/cleaned_encoded_development_test.csv"
         logger.info("Using practise train")
     else:
-        train_dataset_path = "data/full_data/cleaned/train_clean_encoded.csv"
+        train_dataset_path = "data/upsampled_data/gender/train_clean_encoded_upsampled.csv"
         val_dataset_path = "data/full_data/cleaned/val_clean_encoded.csv"
         logger.info("Using full train")
 
