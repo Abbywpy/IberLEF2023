@@ -1,9 +1,0 @@
-dropout: 0.1
-epochs: 13
-hidden_size: 256
-num_layers: 2
-output_size: 3
-class_name:
-  - celebrity
-  - journalist
-  - politician
