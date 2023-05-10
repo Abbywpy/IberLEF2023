@@ -52,7 +52,6 @@ class SpanishTweetsCLF(pl.LightningModule):
         self.clf_attr = CLF_DICT[clf_type]
         self.lr = lr
 
-        # TODO: finetune SimpleCLF classifier
         if clf_type == "simple":
             logger.info("running simple classifier")
 
