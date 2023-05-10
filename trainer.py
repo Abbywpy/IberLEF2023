@@ -64,13 +64,6 @@ class SpanishTweetsCLF(pl.LightningModule):
                     attr_hp = DictAsMember(yaml.safe_load(f))
                     logger.info(attr_hp)
                     setattr(self, f"{attr}_hp", attr_hp)
-                setattr(self, f"{attr}_precision", torchmetrics.Precision(
-                    num_classes=attr_hp.output_size, average='macro', task="multiclass").to(DEVICE))
-                setattr(self, f"{attr}_recall", torchmetrics.Recall(
-                    num_classes=attr_hp.output_size, average='macro', task="multiclass").to(DEVICE))
-                setattr(self, f"{attr}_f1", torchmetrics.classification.MulticlassF1Score(
-                    num_classes=attr_hp.output_size, average='macro', task="multiclass").to(DEVICE))
-
                 setattr(self, f"clf_{attr}", SimpleCLF(
                     attr_name=attr,
                     output_size=attr_hp.output_size,
@@ -120,32 +113,17 @@ class SpanishTweetsCLF(pl.LightningModule):
 
             attr_loss = cross_entropy_loss(ret[f"pred_{attr}"], ret[attr])
             loss += attr_loss
+            wandb_logger[f"train/{attr}/loss"] = attr_loss
 
             # Calculate and log precision, recall, and F1-score
-            precision = getattr(self, f'{attr}_precision')(
-                ret[f"pred_{attr}"], ret[attr])
-            recall = getattr(self, f'{attr}_recall')(
-                ret[f"pred_{attr}"], ret[attr])
-            f1 = getattr(self, f'{attr}_f1')(ret[f"pred_{attr}"], ret[attr])
-            final_metric = (f1 * precision * recall) / 3
-
-
-            wandb_logger[f"train/{attr}/loss"] = attr_loss
-            wandb_logger[f"train/{attr}/acc"] = accuracy(
-                ret[f"pred_{attr}"], ret[attr])
-            wandb_logger[f"train/{attr}/precision"] = precision
-            wandb_logger[f"train/{attr}/recall"] = recall
-            wandb_logger[f"train/{attr}/f1"] = f1
-            wandb_logger[f"train/{attr}/final_metric"] = final_metric
-            if self.global_step % 80 == 0:
+            if self.global_step % 100 == 0:
                 cm = wandb.plot.confusion_matrix(
                     y_true=ret[attr].tolist(),
                     preds=ret[f"pred_{attr}"].argmax(dim=1).tolist(),
                     class_names=getattr(self, f'{attr}_hp').class_name)
                 wandb_logger[f"train/{attr}/conf_mat"] = cm
         self.logger.experiment.log(wandb_logger)
-
-
+        self.log("train/loss", loss/4)
         return loss
 
     def validation_step(self, batch, batch_idx):
@@ -156,54 +134,22 @@ class SpanishTweetsCLF(pl.LightningModule):
         ret["concated_embeds"] = concat_embeds(**ret)
 
         loss = 0
-        total_f1 = 0
-        total_final_metric = 0
         wandb_logger = {}
         for attr in self.clf_attr:
             ret.update(getattr(self, f'clf_{attr}')(**ret))
 
             attr_loss = cross_entropy_loss(ret[f"pred_{attr}"], ret[attr])
             loss += attr_loss
-
-            # Calculate and log precision, recall, and F1-score
-            precision = getattr(self, f'{attr}_precision')(
-                ret[f"pred_{attr}"], ret[attr])
-            recall = getattr(self, f'{attr}_recall')(
-                ret[f"pred_{attr}"], ret[attr])
-            f1 = getattr(self, f'{attr}_f1')(ret[f"pred_{attr}"], ret[attr])
-            final_metric = (f1 * precision * recall) / 3
-            total_final_metric += final_metric
-            total_f1 += f1
-
-            
             wandb_logger[f"valid/{attr}/loss"] = attr_loss
-            wandb_logger[f"valid/{attr}/acc"] = accuracy(
-                ret[f"pred_{attr}"], ret[attr])
-            wandb_logger[f"valid/{attr}/precision"] = precision
-            wandb_logger[f"valid/{attr}/recall"] = recall
-            wandb_logger[f"valid/{attr}/f1"] = f1
-            wandb_logger[f"valid/{attr}/final_metric"] = final_metric
-            self.log(f"valid/{attr}/loss", attr_loss)
-            self.log(f"valid/{attr}/acc", accuracy(
-                ret[f"pred_{attr}"], ret[attr]))
-            self.log(f"valid/{attr}/precision", precision)
-            self.log(f"valid/{attr}/recall", recall)
-            self.log(f"valid/{attr}/f1", f1)
-            self.log(f"valid/{attr}/final_metric", final_metric)
-            if self.global_step % 80 == 0:
+
+            # Calculate acc
+            if self.global_step % 500 == 0:
                     cm = wandb.plot.confusion_matrix(
                         y_true=ret[attr].tolist(),
                         preds=ret[f"pred_{attr}"].argmax(dim=1).tolist(),
                         class_names=getattr(self, f'{attr}_hp').class_name)
                     wandb_logger[f"valid/{attr}/conf_mat"] = cm
-
-        average_f1 = total_f1 / len(self.clf_attr)
-        wandb_logger["valid/average_f1"] = average_f1
-        self.log("valid/average_f1", average_f1)
-        avg_final_metric = total_final_metric / len(self.clf_attr)
-        wandb_logger["valid/average_final_metric"] = avg_final_metric
-        self.log("valid/average_final_metric", avg_final_metric)
-        self.logger.experiment.log(wandb_logger)
+        self.log("valid/loss", loss/4)
 
         return loss
 
@@ -245,12 +191,7 @@ def main(hparams):
     wandb_logger = WandbLogger(project="spanish-tweets", name=hparams.run_name)
 
     trainer = L.Trainer(callbacks=[
-                        EarlyStopping(monitor="valid/average_final_metric", mode="max", patience=3),
-                        ModelCheckpoint(monitor="valid/average_final_metric", mode="max", save_top_k=3, save_last=False, verbose=True, filename="{epoch}-{valid/average_final_metric:.2f}"),
-                        ModelCheckpoint(monitor="valid/profession/final_metric", mode="max", save_top_k=1, save_last=False, verbose=True, filename="{epoch}-{valid/profession/final_metric:.2f}"),
-                        ModelCheckpoint(monitor="valid/gender/final_metric", mode="max", save_top_k=1, save_last=False, verbose=True, filename="{epoch}-{valid/gender/final_metric:.2f}"),
-                        ModelCheckpoint(monitor="valid/ideology_multiclass/final_metric", mode="max", save_top_k=1, save_last=False, verbose=True, filename="{epoch}-{valid/ideology_multiclass/final_metric:.2f}"),
-                        ModelCheckpoint(monitor="valid/ideology_binary/final_metric", mode="max", save_top_k=1, save_last=False, verbose=True, filename="{epoch}-{valid/ideology_binary/final_metric:.2f}"),],
+                        EarlyStopping(monitor="valid/loss", mode="max", patience=3)],
                         accelerator=hparams.accelerator,
                         devices=1,
                         logger=wandb_logger,
