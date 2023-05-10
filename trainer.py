@@ -30,11 +30,10 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 DEVICE = torch.device(
     "cuda:0") if torch.cuda.is_available() else torch.device("cpu")
 
+# change depending on which attribute you want to train
 CLF_DICT = {"simple": [
     'gender',
-    'profession',
-    'ideology_binary',
-    'ideology_multiclass'],
+    ],
     "mlcl": ["mlcl"]
 }
 
