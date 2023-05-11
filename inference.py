@@ -21,15 +21,15 @@ def create_argumentparser():
 def create_decoding_dict():
     decoding_dict = {}
     decoding_dict['gender'] = {0: 'female', 1: 'male'}
-    decoding_dict['profession'] = {0: 'celebrity', 1: 'journalist', 2: 'politician'}
-    decoding_dict['ideology_binary'] = {0: 'left', 1: 'right'}
-    decoding_dict['ideology_multiclass'] = {0: 'left', 1: 'moderate_left', 2: 'moderate_right', 3: 'right'}
+    # decoding_dict['profession'] = {0: 'celebrity', 1: 'journalist', 2: 'politician'}
+    # decoding_dict['ideology_binary'] = {0: 'left', 1: 'right'}
+    # decoding_dict['ideology_multiclass'] = {0: 'left', 1: 'moderate_left', 2: 'moderate_right', 3: 'right'}
 
     return decoding_dict
 
 
 def decode_preds(predictions, decoding_dict):
-    attrs = {'gender': [], 'profession': [], 'ideology_binary': [], 'ideology_multiclass': []}
+    attrs = {'gender': []}#, 'profession': [], 'ideology_binary': [], 'ideology_multiclass': []}
     for i in range(len(predictions)):  # for each batch = cluster
         for j, attr in enumerate(list(attrs.keys())):  # for each attribute
             pred_idcs = []
@@ -62,7 +62,7 @@ def main():
 
     predictions = trainer.predict(loaded_model, dm)
 
-    attrs = {'gender': [], 'profession': [], 'ideology_binary': [], 'ideology_multiclass': []}
+    attrs = {'gender': []}
 
     decoding_dict = create_decoding_dict()
 
