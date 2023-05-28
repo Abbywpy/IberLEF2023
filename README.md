@@ -33,9 +33,9 @@ Argument description:
 * -c: model architecture (simple for simple classifier)
 * -tiny: activates use of tiny dataset (for testing purposes)
 * -practise: activates use of practise dataset (subset of full dataset)
-* -lr
-* -n
-* -hp_path
+* -lr: learning rate
+* -n: name of the logger
+* -hp_path: path to the hyperparameter file/folder
 
 
 If none of the arguments are specified, the script will run with the following default values:
@@ -46,4 +46,10 @@ If none of the arguments are specified, the script will run with the following d
 * -c: simple
 * -tiny: deactivated
 * -practise: deactivated
+
+For inference, run the following command:
+
+```bash
+python inference.py -cp 'path/to/checkpoint' -tdp 'path/to/test_data' -op 'results/results.csv' -a 'cpu'
+```
 

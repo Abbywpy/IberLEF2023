@@ -50,7 +50,7 @@ if __name__ == "__main__":
     print("Best trial:")
     trials = study.get_trials()
 
-    with open("trial_results.txt", "w") as file:
+    with open("clf_hp/trial_results.txt", "w") as file:
         for trial in trials:
             trial_number = trial.number
             trial_value = trial.value
